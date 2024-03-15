@@ -4,6 +4,7 @@ import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { useAuth } from "./store/useAuth";
 import { useEffect } from "react";
+import { RegistrosPage } from "./pages/Registros";
 
 const App = () => {
   const { user, getUser } = useAuth();
@@ -16,7 +17,14 @@ const App = () => {
     <main className="min-h-screen flex flex-col justify-between">
       <Navbar />
       <Routes>
-        <Route path="/auth" element={user ? <Navigate to="/" /> : <Auth />} />
+        <Route
+          path="/auth"
+          element={user ? <Navigate to="/registros" /> : <Auth />}
+        />
+        <Route
+          path="/registros"
+          element={user ? <RegistrosPage /> : <Navigate to="/auth" />}
+        />
       </Routes>
       <Footer />
     </main>
