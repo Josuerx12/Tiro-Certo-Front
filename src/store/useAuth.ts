@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { IUser } from "../interfaces/IUser";
 import Cookies from "js-cookie";
 import { api } from "../config/api";
+import { ILoginCredentials } from "../interfaces/ILoginCredentials";
 
 type States = {
   user?: IUser;
@@ -11,6 +12,7 @@ type States = {
 type Actions = {
   logout: () => void;
   getUser: () => Promise<void>;
+  login: (credentials: ILoginCredentials) => Promise<string>;
 };
 
 const useAuth = create<States & Actions>((set) => ({
@@ -26,6 +28,15 @@ const useAuth = create<States & Actions>((set) => ({
       console.log(error.message);
       set(() => ({ user: undefined }));
       Cookies.remove("refreshToken");
+    }
+  },
+  login: async (credentials: ILoginCredentials) => {
+    try {
+      const res = await api().post("auth/login", credentials);
+      Cookies.set("refreshToken", res.data.payload);
+      return res.data.payload as string;
+    } catch (e: any) {
+      throw e.response.data.error;
     }
   },
   logout: () => {
