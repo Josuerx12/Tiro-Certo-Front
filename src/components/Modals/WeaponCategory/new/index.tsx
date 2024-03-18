@@ -12,7 +12,7 @@ type Props = {
 };
 
 const NewWeaponCategoryModal = ({ isOpen, handleClose }: Props) => {
-  const { register, handleSubmit: onSubmit } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       name: undefined,
       ["category-logo"]: undefined,
@@ -27,12 +27,16 @@ const NewWeaponCategoryModal = ({ isOpen, handleClose }: Props) => {
 
   const { mutateAsync, isLoading } = useMutation("createCategory", Create, {
     onSuccess: () =>
-      Promise.all([query.invalidateQueries("categories"), handleClose()]),
+      Promise.all([
+        query.invalidateQueries("categories"),
+        handleClose(),
+        reset(),
+      ]),
   });
 
-  const handleSubmit = async (data: any) => {
+  const onSubmit = async (data: any) => {
     credentials.append("name", data.name);
-    credentials.append("category-logo", data["category-pic"][0]);
+    credentials.append("category-logo", data["category-logo"][0]);
 
     await mutateAsync(credentials);
   };
@@ -40,10 +44,17 @@ const NewWeaponCategoryModal = ({ isOpen, handleClose }: Props) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   return (
-    <Modal show={isOpen} hidden={handleClose} title="Nova categoria de arma">
+    <Modal
+      show={isOpen}
+      hidden={() => {
+        reset();
+        handleClose();
+      }}
+      title="Nova categoria de arma"
+    >
       <form
         ref={formRef}
-        onSubmit={onSubmit(handleSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
         className="w-full flex flex-col gap-3"
       >
         <div className="flex flex-col gap-1">
@@ -74,7 +85,13 @@ const NewWeaponCategoryModal = ({ isOpen, handleClose }: Props) => {
       </form>
 
       <div className="flex justify-between gap-2">
-        <button className="w-full bg-red-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-red-600 ease-linear duration-100">
+        <button
+          onClick={() => {
+            reset();
+            handleClose();
+          }}
+          className="w-full bg-red-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-red-600 ease-linear duration-100"
+        >
           Cancelar
         </button>
         <button
