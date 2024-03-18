@@ -4,7 +4,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { UserDetail } from "../../Modals/UserDetail";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../store/useAuth";
 
 type Props = {
@@ -17,6 +17,26 @@ const UserDropdown = ({ isOpen, handleClose, user }: Props) => {
   const [userModalIsOpen, setUserModalIsOpen] = useState(false);
   const { logout } = useAuth();
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        handleClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("click", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isOpen, handleClose]);
   return (
     <>
       <UserDetail
@@ -24,7 +44,7 @@ const UserDropdown = ({ isOpen, handleClose, user }: Props) => {
         handleCloseModal={() => setUserModalIsOpen((prev) => !prev)}
         user={user}
       />
-      <div className="relative">
+      <div ref={dropdownRef} className="relative">
         <div
           onClick={handleClose}
           className="flex items-center cursor-pointer gap-2"
@@ -36,16 +56,18 @@ const UserDropdown = ({ isOpen, handleClose, user }: Props) => {
             alt="profile-pic"
           />
           {user.name.split(" ")[0]}
-          <RiArrowDropDownLine className="text-3xl" />
+          <RiArrowDropDownLine
+            className={`text-3xl ${
+              isOpen && "rotate-180"
+            } ease-linear duration-100`}
+          />
         </div>
 
         <ul
           onClick={handleClose}
           className={`md:absolute ${
-            isOpen
-              ? "opacity-100"
-              : "opacity-0 h-0 w-0 z-[-2] md:w-fit md:h-fit"
-          } flex flex-col gap-3 md:bg-gray-50 md:text-black w-fit rounded-lg p-2 md:right-0 md:mt-2 shadow transition-all ease-in-out duration-200 `}
+            !isOpen && "hidden"
+          } flex flex-col gap-3 md:bg-gray-50 md:text-black w-fit rounded-lg p-2 md:right-0 md:mt-2 shadow`}
         >
           <h4 className="flex gap-2 items-center justify-center  text-nowrap font-bold md:text-violet-950 md:pl-2">
             Opções do Usuário <FaUser />

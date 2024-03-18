@@ -14,9 +14,6 @@ export const api = (token?: string) => {
 
   connection = axios.create({
     baseURL: "http://localhost:3333/",
-    headers: {
-      "Content-Type": "application/json",
-    },
   });
 
   return connection;

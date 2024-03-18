@@ -1,0 +1,77 @@
+import { FaPlus } from "react-icons/fa";
+import NewWeaponCategoryModal from "../../../components/Modals/WeaponCategory/new";
+import { useState } from "react";
+import { useQuery, useQueryClient } from "react-query";
+import { useWeaponCategory } from "../../../hooks/useWeaponCategory";
+import { ICategories } from "../../../interfaces/ICategories";
+import { RefreshButton } from "../../../components/Buttons/RefreshButton";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
+const WeaponCategory = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const { Fetch } = useWeaponCategory();
+
+  const { isLoading, data } = useQuery<ICategories[]>("categories", Fetch);
+
+  const query = useQueryClient();
+
+  return (
+    <main className="flex-1 flex flex-col items-center mt-2">
+      <NewWeaponCategoryModal
+        isOpen={modalIsOpen}
+        handleClose={() => setModalIsOpen((prev) => !prev)}
+      />
+      <h3 className="text-2xl font-semibold mb-4">
+        Gerenciador de Categorias de Armas
+      </h3>
+
+      <div className="w-4/5 flex justify-end my-2 gap-2">
+        <RefreshButton command={() => query.resetQueries("categories")} />
+        <button
+          onClick={() => setModalIsOpen((prev) => !prev)}
+          className="flex items-center gap-2 bg-violet-700 text-white p-2 rounded-md hover:bg-violet-600 ease-linear duration-100"
+        >
+          <FaPlus /> Nova categoria
+        </button>
+      </div>
+      {isLoading ? (
+        <div className="w-full flex justify-center gap-3 text-3xl">
+          <span>Carregando</span>
+          <span>
+            <AiOutlineLoading3Quarters className="animate-spin duration-1000000 " />
+          </span>
+        </div>
+      ) : (
+        <table className="w-4/5 border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="border border-gray-300 py-1 px-2">ID</th>
+              <th className="border border-gray-300 py-1 px-2">Nome</th>
+              <th className="border border-gray-300 py-1 px-2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {data?.map((category) => (
+              <tr key={category._id}>
+                <td className="border border-gray-300 py-1 px-2 text-center">
+                  {category._id}
+                </td>
+                <td className="border border-gray-300 py-1 px-2 text-center">
+                  {category.name}
+                </td>
+                <td className="border border-gray-300 py-1 px-2 text-center">
+                  <button className="bg-blue-700 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded ease-linear duration-100">
+                    Detalhes
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </main>
+  );
+};
+
+export { WeaponCategory };

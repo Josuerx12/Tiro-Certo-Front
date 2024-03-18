@@ -1,13 +1,16 @@
 import { IoMenu } from "react-icons/io5";
-import { GiCrossedPistols } from "react-icons/gi";
+import { GiCrossedPistols, GiPistolGun } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../store/useAuth";
 import { UserDropdown } from "./UserDropdown";
 import { FaX } from "react-icons/fa6";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaRing, FaUsers } from "react-icons/fa";
 import { NewRegistro } from "../Modals/Registro/New";
+import { Dropdown } from "../Dropdown";
+import { GrNotes } from "react-icons/gr";
+import { BiCategory } from "react-icons/bi";
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -61,14 +64,46 @@ const Navbar = () => {
               } flex gap-2 items-center "text-white"
            before:content-[''] before:absolute before:w-0 before:duration-300 before:bottom-[-4px] before:bg-fuchsia-400 before:left-0 before:h-0.5 hover:before:w-4/5`}
             >
-              Inicio
+              Página Inicial
             </Link>
           </li>
-          {user && (
-            <>
-              <li></li>
-            </>
-          )}
+          {user?.admin ||
+            (user?.founder && (
+              <li>
+                <Dropdown title="Administração">
+                  <Link
+                    to="/usuarios"
+                    className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
+                  >
+                    <FaUsers /> Usuários
+                  </Link>
+                  <Link
+                    to="/atividadesDoUsuarios"
+                    className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
+                  >
+                    <GrNotes /> Registros de Atividades
+                  </Link>
+                  <Link
+                    to="/clubes"
+                    className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
+                  >
+                    <FaRing /> Clubes
+                  </Link>
+                  <Link
+                    to="/armas"
+                    className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
+                  >
+                    <GiPistolGun /> Armas
+                  </Link>
+                  <Link
+                    to="/categoriasArmas"
+                    className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
+                  >
+                    <BiCategory /> Categorias de Arma
+                  </Link>
+                </Dropdown>
+              </li>
+            ))}
           {!user ? (
             <li>
               <Link

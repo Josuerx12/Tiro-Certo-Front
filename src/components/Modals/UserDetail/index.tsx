@@ -141,11 +141,11 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
                     setIsEditing((prev) => !prev);
                     setIsChangingPassword(false);
                   }}
-                  className="w-full bg-red-600 p-2 rounded font-semibold tracking-wider text-white hover:bg-red-800 ease-linear duration-100"
+                  className="w-full bg-red-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-red-600 ease-linear duration-100"
                 >
                   Cancelar
                 </button>
-                <button className="w-full bg-blue-600 p-2 rounded font-semibold tracking-wider text-white hover:bg-blue-800 ease-linear duration-100">
+                <button className="w-full bg-blue-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-blue-600 ease-linear duration-100">
                   Salvar
                 </button>
               </div>
