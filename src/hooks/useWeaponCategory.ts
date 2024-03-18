@@ -37,12 +37,16 @@ export function useWeaponCategory() {
       throw error;
     }
   }
-  async function Edit(id: string, credentials: FormData) {
+  async function EditFC({
+    id,
+    credentials,
+  }: {
+    id: string;
+    credentials: FormData;
+  }) {
     try {
       const payload = (
-        await api(token).put(`/weaponsCategories/${id}`, credentials, {
-          headers: { "Content-Type": "multipart/form-data" },
-        })
+        await api(token).put(`/weaponsCategories/${id}`, credentials)
       ).data.payload;
 
       return payload;
@@ -51,5 +55,5 @@ export function useWeaponCategory() {
     }
   }
 
-  return { Fetch, Delete, Edit, Create };
+  return { Fetch, Delete, EditFC, Create };
 }

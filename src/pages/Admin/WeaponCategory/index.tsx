@@ -6,6 +6,7 @@ import { useWeaponCategory } from "../../../hooks/useWeaponCategory";
 import { ICategories } from "../../../interfaces/ICategories";
 import { RefreshButton } from "../../../components/Buttons/RefreshButton";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { WeaponCategoriesTable } from "../../../components/Tables/WeaponCategoriesTable";
 
 const WeaponCategory = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -53,19 +54,7 @@ const WeaponCategory = () => {
           </thead>
           <tbody>
             {data?.map((category) => (
-              <tr key={category._id}>
-                <td className="border border-gray-300 py-1 px-2 text-center">
-                  {category._id}
-                </td>
-                <td className="border border-gray-300 py-1 px-2 text-center">
-                  {category.name}
-                </td>
-                <td className="border border-gray-300 py-1 px-2 text-center">
-                  <button className="bg-blue-700 hover:bg-blue-600 text-white font-bold py-1 px-2 rounded ease-linear duration-100">
-                    Detalhes
-                  </button>
-                </td>
-              </tr>
+              <WeaponCategoriesTable category={category} key={category._id} />
             ))}
           </tbody>
         </table>
