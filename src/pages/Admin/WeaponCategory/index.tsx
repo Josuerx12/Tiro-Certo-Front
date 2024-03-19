@@ -5,8 +5,8 @@ import { useQuery, useQueryClient } from "react-query";
 import { useWeaponCategory } from "../../../hooks/useWeaponCategory";
 import { ICategories } from "../../../interfaces/ICategories";
 import { RefreshButton } from "../../../components/Buttons/RefreshButton";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { WeaponCategoriesTable } from "../../../components/Tables/WeaponCategoriesTable";
+import { Loading } from "../../../components/Loading";
 
 const WeaponCategory = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -37,19 +37,14 @@ const WeaponCategory = () => {
         </button>
       </div>
       {isLoading ? (
-        <div className="w-full flex justify-center gap-3 text-3xl">
-          <span>Carregando</span>
-          <span>
-            <AiOutlineLoading3Quarters className="animate-spin duration-1000000 " />
-          </span>
-        </div>
+        <Loading />
       ) : (
         <table className="w-4/5 border-collapse border border-gray-300">
           <thead>
             <tr className="bg-gray-200">
-              <th className="border border-gray-300 py-1 px-2">ID</th>
+              <th className="border border-gray-300 py-1 px-2">Foto</th>
               <th className="border border-gray-300 py-1 px-2">Nome</th>
-              <th className="border border-gray-300 py-1 px-2"></th>
+              <th className="border border-gray-300 py-1 px-2">Ações</th>
             </tr>
           </thead>
           <tbody>

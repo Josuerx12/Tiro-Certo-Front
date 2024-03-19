@@ -6,6 +6,7 @@ import { useAuth } from "./store/useAuth";
 import { useEffect } from "react";
 import { RegistrosPage } from "./pages/Registros";
 import { WeaponCategory } from "./pages/Admin/WeaponCategory";
+import { UsersAdminDashboard } from "./pages/Admin/Users";
 
 const App = () => {
   const { user, getUser } = useAuth();
@@ -31,6 +32,16 @@ const App = () => {
           element={
             user?.admin || user?.founder ? (
               <WeaponCategory />
+            ) : (
+              <Navigate to="/registros" />
+            )
+          }
+        />
+        <Route
+          path="/usuarios"
+          element={
+            user?.admin || user?.founder ? (
+              <UsersAdminDashboard />
             ) : (
               <Navigate to="/registros" />
             )

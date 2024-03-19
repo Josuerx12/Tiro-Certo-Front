@@ -26,10 +26,10 @@ const Navbar = () => {
         handleClose={() => setNewRegisterModalOpen((prev) => !prev)}
       />
       <nav className=" flex text-white justify-between items-center p-4 bg-violet-950 z-10">
-        <Link to="/" className="z-[-999] text-orange-300">
+        <Link to="/" className="z-[-999] text-violet-50">
           <h3 className="flex gap-2 justify-center text-xl font-bold">
             <GiCrossedPistols className=" text-3xl" />
-            <span>Tiro Fácil</span>
+            <span>Tiro Certo</span>
           </h3>
         </Link>
 
@@ -93,7 +93,7 @@ const Navbar = () => {
                     to="/armas"
                     className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
                   >
-                    <GiPistolGun /> Armas
+                    <GiPistolGun /> Acervo / Armas
                   </Link>
                   <Link
                     to="/categoriasArmas"

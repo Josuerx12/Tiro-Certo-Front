@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IUser {
   clubs: any[];
   _id: string;
   name: string;
   email: string;
   cpf: number;
-  photo: string;
+  photoURL: string | null;
   admin: boolean;
   founder: boolean;
   updatedAt: string;

@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ICategories } from "../../../../interfaces/ICategories";
 import { Modal } from "../../Modal";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useWeaponCategory } from "../../../../hooks/useWeaponCategory";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { FaPen, FaTrash } from "react-icons/fa";
+import { DeleteWeaponCategoryModal } from "../delete";
 
 type Props = {
   isOpen: boolean;
@@ -18,6 +20,9 @@ const WeaponCategoryDetailModal = ({
   handleClose,
   category,
 }: Props) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const credentials = new FormData();
   const query = useQueryClient();
   const { EditFC } = useWeaponCategory();
@@ -50,10 +55,36 @@ const WeaponCategoryDetailModal = ({
       hidden={handleClose}
       title="Detalhes da categoria de armas"
     >
-      <div>
+      <DeleteWeaponCategoryModal
+        isOpen={isDeleting}
+        handleClose={() => {
+          setIsDeleting((prev) => !prev);
+        }}
+        category={category}
+      />
+      {!isEditing && (
+        <div className="w-full flex justify-end gap-2">
+          <button
+            onClick={() => setIsEditing(true)}
+            className="flex gap-1 items-center bg-violet-800 hover:bg-violet-500 duration-200 px-2 py-1 rounded text-white"
+          >
+            <FaPen /> Editar
+          </button>
+          <button
+            onClick={() => setIsDeleting((prev) => !prev)}
+            className="flex gap-1 items-center bg-red-700 hover:bg-red-500 duration-200 px-2 py-1 rounded text-white"
+          >
+            <FaTrash /> Deletar
+          </button>
+        </div>
+      )}
+
+      <div className="flex flex-col gap-1 items-center">
+        <h4 className="font-bold">Logo Cadastrada:</h4>
         <img
-          src={`https://docs.google.com/uc?id=${category.logo}`}
-          alt={category.logo}
+          className="w-56 h-56 rounded shadow"
+          src={`${category.logoURL}`}
+          alt={category.name}
         />
       </div>
       <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
@@ -62,45 +93,50 @@ const WeaponCategoryDetailModal = ({
           <input
             {...register("name")}
             defaultValue={category.name}
+            disabled={!isEditing}
             type="text"
-            className="bg-slate-200 rounded outline-violet-600 flex-1 p-1"
+            className="rounded border-2 border-gray-100 outline-violet-600 flex-1 p-1"
           />
         </div>
-        <div className="flex flex-col gap-1">
-          <label className="text-nowrap">Logo da categoria: </label>
-          <input
-            {...register("category-logo")}
-            type="file"
-            accept="image/*"
-            placeholder="Ex. Pistola"
-            className="bg-slate-200 rounded outline-violet-600 flex-1 p-1"
-          />
-        </div>
+        {isEditing && (
+          <div className="flex flex-col gap-1">
+            <label className="text-nowrap">Logo da categoria: </label>
+            <input
+              {...register("category-logo")}
+              type="file"
+              accept="image/*"
+              placeholder="Ex. Pistola"
+              className="rounded border-2 border-gray-100 outline-violet-600 flex-1 p-1"
+            />
+          </div>
+        )}
       </form>
-      <div className="flex justify-between gap-2">
-        <button
-          onClick={() => {
-            reset();
-            handleClose();
-          }}
-          className="w-full bg-red-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-red-600 ease-linear duration-100"
-        >
-          Cancelar
-        </button>
-        <button
-          onClick={() => formRef.current?.requestSubmit()}
-          className="flex gap-2 items-center justify-center w-full bg-blue-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-blue-600 ease-linear duration-100"
-        >
-          {isLoading ? (
-            <>
-              Salvando
-              <AiOutlineLoading3Quarters className="animate-spin duration-1000000 " />
-            </>
-          ) : (
-            <>Salvar</>
-          )}
-        </button>
-      </div>
+      {isEditing && (
+        <div className="flex justify-between gap-2">
+          <button
+            onClick={() => {
+              reset();
+              setIsEditing(false);
+            }}
+            className="w-full bg-red-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-red-600 ease-linear duration-100"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={() => formRef.current?.requestSubmit()}
+            className="flex gap-2 items-center justify-center w-full bg-blue-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-blue-600 ease-linear duration-100"
+          >
+            {isLoading ? (
+              <>
+                Salvando
+                <AiOutlineLoading3Quarters className="animate-spin duration-1000000 " />
+              </>
+            ) : (
+              <>Salvar</>
+            )}
+          </button>
+        </div>
+      )}
     </Modal>
   );
 };

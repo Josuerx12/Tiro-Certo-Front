@@ -3,7 +3,7 @@ import { IUser } from "../../../interfaces/IUser";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { UserDetail } from "../../Modals/UserDetail";
+import { UserDetail } from "../../Modals/User/details";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../store/useAuth";
 
@@ -51,8 +51,8 @@ const UserDropdown = ({ isOpen, handleClose, user }: Props) => {
           title="Clique para ver as opções do usuário"
         >
           <img
-            className="w-10 h-10 rounded-full"
-            src="/noImage.jpg"
+            className="w-12 h-12 rounded-full border-2  border-white"
+            src={user.photoURL ? user.photoURL : "/noImage.jpg"}
             alt="profile-pic"
           />
           {user.name.split(" ")[0]}

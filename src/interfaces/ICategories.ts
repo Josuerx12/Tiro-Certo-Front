@@ -1,7 +1,7 @@
 export interface ICategories {
   _id: string;
   name: string;
-  logo: string;
+  logoURL: string | null;
   createdAt: string;
   updatedAt: string;
 }

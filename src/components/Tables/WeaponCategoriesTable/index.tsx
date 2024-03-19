@@ -13,10 +13,14 @@ const WeaponCategoriesTable = ({ category }: { category: ICategories }) => {
       />
       <tr>
         <td className="border border-gray-300 py-1 px-2 text-center">
-          {category._id}
+          <img
+            className="w-14 h-14 mx-auto rounded"
+            src={category.logoURL ? category.logoURL : "/noImage.jpg"}
+            alt={category.name}
+          />
         </td>
         <td className="border border-gray-300 py-1 px-2 text-center">
-          {category.name}
+          <span>{category.name}</span>
         </td>
         <td className="border border-gray-300 py-1 px-2 text-center">
           <button
