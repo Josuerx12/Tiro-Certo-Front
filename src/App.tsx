@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { RegistrosPage } from "./pages/Registros";
 import { WeaponCategory } from "./pages/Admin/WeaponCategory";
 import { UsersAdminDashboard } from "./pages/Admin/Users";
+import { AcervoPage } from "./pages/Acervo";
 
 const App = () => {
   const { user, getUser } = useAuth();
@@ -36,6 +37,10 @@ const App = () => {
               <Navigate to="/registros" />
             )
           }
+        />
+        <Route
+          path="/acervo"
+          element={user ? <AcervoPage /> : <Navigate to="/auth" />}
         />
         <Route
           path="/usuarios"

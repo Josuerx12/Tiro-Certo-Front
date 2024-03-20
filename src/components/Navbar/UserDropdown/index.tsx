@@ -2,7 +2,7 @@ import { FaUser } from "react-icons/fa";
 import { IUser } from "../../../interfaces/IUser";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiLogoutBoxLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserDetail } from "../../Modals/User/details";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../store/useAuth";
@@ -18,6 +18,7 @@ const UserDropdown = ({ isOpen, handleClose, user }: Props) => {
   const { logout } = useAuth();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -78,23 +79,27 @@ const UserDropdown = ({ isOpen, handleClose, user }: Props) => {
               setUserModalIsOpen((prev) => !prev);
             }}
           >
-            <Link to="/">Ver Perfil</Link>
+            Ver Perfil
           </li>
           <li
             onClick={() => {
               setUserModalIsOpen(false);
+              navigate("/registros");
             }}
             className="cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 "
           >
-            <Link to="/registros">Atividades</Link>
+            <Link to="/registros" className="w-full">
+              Atividades
+            </Link>
           </li>
           <li
             className="cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2"
             onClick={() => {
               setUserModalIsOpen(false);
+              navigate("/acervo");
             }}
           >
-            <Link to="/">Acervo</Link>
+            <Link to="/acervo">Acervo</Link>
           </li>
           <li className="border-b-2 border-gray-300"></li>
           <li

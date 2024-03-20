@@ -32,6 +32,14 @@ export function useUsers() {
       throw error.response.data.error;
     }
   }
+  async function deleteOne(id: string) {
+    try {
+      const payload = (await api(token).delete("/users/" + id)).data.payload;
+      return payload;
+    } catch (error: any) {
+      throw error.response.data.error;
+    }
+  }
   async function register(credentials: FormData) {
     try {
       const payload = (await api(token).post("/auth/register", credentials))
@@ -42,5 +50,5 @@ export function useUsers() {
     }
   }
 
-  return { get, getAll, editOne, register };
+  return { get, getAll, editOne, register, deleteOne };
 }

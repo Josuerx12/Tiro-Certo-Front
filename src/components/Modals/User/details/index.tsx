@@ -1,6 +1,9 @@
 import { IUser } from "../../../../interfaces/IUser";
 import { useState } from "react";
 import { Modal } from "../../Modal";
+import { FaPen, FaTrash } from "react-icons/fa";
+import DeleteUserModal from "../delete";
+import { useAuth } from "../../../../store/useAuth";
 
 type Props = {
   isOpen: boolean;
@@ -9,11 +12,26 @@ type Props = {
 };
 
 const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
+  const { user: userLogged } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   return (
-    <Modal show={isOpen} title="Perfil do Usuário" hidden={handleCloseModal}>
-      <div className="flex-1 mt-14 mb-4 bg-white flex flex-col gap-4 rounded-lg px-4 py-3">
+    <Modal
+      show={isOpen}
+      title="Perfil do Usuário"
+      hidden={() => {
+        handleCloseModal();
+        setIsEditing(false);
+        setIsChangingPassword(false);
+      }}
+    >
+      <DeleteUserModal
+        isOpen={isDeleting}
+        handleClose={() => setIsDeleting((prev) => !prev)}
+        user={user}
+      />
+      <div className="flex-1 bg-white flex flex-col gap-4 rounded-lg px-4 py-3">
         <div className="flex flex-1 gap-6 text-black flex-wrap justify-between">
           <img
             className="w-40 h-40 md:w-80 md:h-80 mx-auto rounded-lg shadow shadow-gray-300"
@@ -26,12 +44,22 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
                 Dados do Usuário
               </h3>
               {!isEditing && (
-                <button
-                  onClick={() => setIsEditing((prev) => !prev)}
-                  className="bg-violet-800 px-2 py-1 rounded text-white"
-                >
-                  Editar
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setIsEditing((prev) => !prev)}
+                    className="flex items-center gap-2 bg-violet-800 hover:bg-violet-600 ease-in-out duration-100 px-2 py-1 rounded text-white"
+                  >
+                    <FaPen /> Editar
+                  </button>
+                  {userLogged?.founder && (
+                    <button
+                      onClick={() => setIsDeleting((prev) => !prev)}
+                      className="flex items-center gap-2 bg-red-600 hover:bg-red-500 ease-in-out duration-100  px-2 py-1 rounded text-white"
+                    >
+                      <FaTrash /> Excluir
+                    </button>
+                  )}
+                </div>
               )}
             </div>
 
