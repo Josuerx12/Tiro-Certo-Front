@@ -5,7 +5,7 @@ import { UsersTable } from "../../../components/Tables/UsersTable";
 import { IUser } from "../../../interfaces/IUser";
 import { RefreshButton } from "../../../components/Buttons/RefreshButton";
 import { FaUserPlus } from "react-icons/fa";
-import { CreateUserModal } from "../../../components/Modals/User/create";
+import { CreateUserModal } from "../../../components/Modals/User/Create";
 import { useState } from "react";
 
 const UsersAdminDashboard = () => {

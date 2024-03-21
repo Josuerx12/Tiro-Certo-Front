@@ -1,5 +1,5 @@
 import { FaPlus } from "react-icons/fa";
-import NewWeaponCategoryModal from "../../../components/Modals/WeaponCategory/create";
+import NewWeaponCategoryModal from "../../../components/Modals/WeaponCategory/Create";
 import { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { useWeaponCategory } from "../../../hooks/useWeaponCategory";

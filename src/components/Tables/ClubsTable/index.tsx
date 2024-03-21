@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { ICategories } from "../../../interfaces/ICategories";
-import { WeaponCategoryDetailModal } from "../../Modals/WeaponCategory/Details";
+import { IClub } from "../../../interfaces/IClub";
+import { ClubDetailModal } from "../../Modals/Club/Details";
 
-const WeaponCategoriesTable = ({ category }: { category: ICategories }) => {
+const ClubsTable = ({ club }: { club: IClub }) => {
   const [isOpen, setIsOpen] = useState(false);
+  console.log(isOpen);
   return (
     <>
-      <WeaponCategoryDetailModal
-        category={category}
+      <ClubDetailModal
+        club={club}
         isOpen={isOpen}
         handleClose={() => setIsOpen((prev) => !prev)}
       />
@@ -15,12 +16,18 @@ const WeaponCategoriesTable = ({ category }: { category: ICategories }) => {
         <td className="border border-gray-300 py-1 px-2 text-center">
           <img
             className="w-14 h-14 mx-auto rounded"
-            src={category.logoURL ? category.logoURL : "/noImage.jpg"}
-            alt={category.name}
+            src={club.logoURL ? club.logoURL : "/noImage.jpg"}
+            alt={club.name}
           />
         </td>
         <td className="border border-gray-300 py-1 px-2 text-center">
-          <span>{category.name}</span>
+          <span>{club.name}</span>
+        </td>
+        <td className="border border-gray-300 py-1 px-2 text-center">
+          <span>{club.cnpj}</span>
+        </td>
+        <td className="border border-gray-300 py-1 px-2 text-center">
+          <span>{club.cr}</span>
         </td>
         <td className="border border-gray-300 py-1 px-2 text-center">
           <button
@@ -35,4 +42,4 @@ const WeaponCategoriesTable = ({ category }: { category: ICategories }) => {
   );
 };
 
-export { WeaponCategoriesTable };
+export { ClubsTable };

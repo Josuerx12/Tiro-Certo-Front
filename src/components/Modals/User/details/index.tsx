@@ -2,7 +2,7 @@ import { IUser } from "../../../../interfaces/IUser";
 import { useState } from "react";
 import { Modal } from "../../Modal";
 import { FaPen, FaTrash } from "react-icons/fa";
-import DeleteUserModal from "../delete";
+import DeleteUserModal from "../Delete";
 import { useAuth } from "../../../../store/useAuth";
 
 type Props = {

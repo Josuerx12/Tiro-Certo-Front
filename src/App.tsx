@@ -8,6 +8,7 @@ import { RegistrosPage } from "./pages/Registros";
 import { WeaponCategory } from "./pages/Admin/WeaponCategory";
 import { UsersAdminDashboard } from "./pages/Admin/Users";
 import { AcervoPage } from "./pages/Acervo";
+import { ClubsAdminDashboard } from "./pages/Admin/Clubs";
 
 const App = () => {
   const { user, getUser } = useAuth();
@@ -47,6 +48,16 @@ const App = () => {
           element={
             user?.admin || user?.founder ? (
               <UsersAdminDashboard />
+            ) : (
+              <Navigate to="/registros" />
+            )
+          }
+        />
+        <Route
+          path="/clubes"
+          element={
+            user?.admin || user?.founder ? (
+              <ClubsAdminDashboard />
             ) : (
               <Navigate to="/registros" />
             )

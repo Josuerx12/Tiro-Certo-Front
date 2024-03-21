@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useWeaponCategory } from "../../../../hooks/useWeaponCategory";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaPen, FaTrash } from "react-icons/fa";
-import { DeleteWeaponCategoryModal } from "../delete";
+import { DeleteWeaponCategoryModal } from "../Delete";
 
 type Props = {
   isOpen: boolean;

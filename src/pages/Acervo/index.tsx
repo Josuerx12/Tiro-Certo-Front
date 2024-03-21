@@ -4,8 +4,9 @@ import { useQuery, useQueryClient } from "react-query";
 import { Loading } from "../../components/Loading";
 import { IWeapon } from "../../interfaces/IWeapon";
 import { RefreshButton } from "../../components/Buttons/RefreshButton";
-import { CreateWeaponModal } from "../../components/Modals/Weapon/create";
+import { CreateWeaponModal } from "../../components/Modals/Weapon/Create";
 import { useState } from "react";
+import WeaponTable from "../../components/Tables/WeaponTable";
 
 const AcervoPage = () => {
   const { get } = useAcervo();
@@ -43,9 +44,14 @@ const AcervoPage = () => {
               <th className="border border-gray-300 py-1 px-2">Nome</th>
               <th className="border border-gray-300 py-1 px-2">Modelo</th>
               <th className="border border-gray-300 py-1 px-2">Validade</th>
+              <th className="border border-gray-300 py-1 px-2">Ações</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            {data.map((weapon) => (
+              <WeaponTable key={weapon._id} weapon={weapon} />
+            ))}
+          </tbody>
         </table>
       ) : (
         <p>Nenhuma arma cadastrada para seu usuário!</p>
