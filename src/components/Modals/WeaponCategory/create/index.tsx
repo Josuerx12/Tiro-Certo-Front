@@ -63,7 +63,6 @@ const NewWeaponCategoryModal = ({ isOpen, handleClose }: Props) => {
             type="text"
             {...register("name")}
             placeholder="Ex. Pistola"
-            onChange={(e) => credentials.append("name", e.target.value)}
             className="rounded border-2 border-gray-100 outline-violet-600 flex-1 p-1"
           />
         </div>
@@ -73,11 +72,6 @@ const NewWeaponCategoryModal = ({ isOpen, handleClose }: Props) => {
             type="file"
             accept="image/*"
             {...register("category-logo")}
-            onChange={(e) => {
-              if (e.target.files) {
-                credentials.append("category-logo", e.target.files[0]);
-              }
-            }}
             className="rounded border-2 border-gray-100 outline-violet-600 flex-1 p-1"
           />
         </div>

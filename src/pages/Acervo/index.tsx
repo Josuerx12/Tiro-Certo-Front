@@ -4,20 +4,31 @@ import { useQuery, useQueryClient } from "react-query";
 import { Loading } from "../../components/Loading";
 import { IWeapon } from "../../interfaces/IWeapon";
 import { RefreshButton } from "../../components/Buttons/RefreshButton";
+import { CreateWeaponModal } from "../../components/Modals/Weapon/create";
+import { useState } from "react";
 
 const AcervoPage = () => {
   const { get } = useAcervo();
   const query = useQueryClient();
   const { data, isLoading } = useQuery<IWeapon[]>("acervo", get);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="flex-1 flex flex-col items-center mt-2">
+      <CreateWeaponModal
+        isOpen={isOpen}
+        handleClose={() => setIsOpen((prev) => !prev)}
+      />
       <h3 className="text-2xl font-semibold mb-4 flex items-center gap-3">
         Meu Acervo <FaPersonRifle />
       </h3>
       <div className="w-4/5 flex justify-end my-2 gap-2">
         <RefreshButton command={() => query.resetQueries("acervo")} />{" "}
-        <button className="flex items-center gap-2 bg-violet-700 text-white p-2 rounded-md hover:bg-violet-600 ease-linear duration-100">
+        <button
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="flex items-center gap-2 bg-violet-700 text-white p-2 rounded-md hover:bg-violet-600 ease-linear duration-100"
+        >
           <FaGun /> Nova arma
         </button>
       </div>

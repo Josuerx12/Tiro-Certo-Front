@@ -107,9 +107,9 @@ const Navbar = () => {
           {!user ? (
             <li>
               <Link
-                className={`relative ${
-                  pathname === "/auth" ? "text-violet-300" : "text-white"
-                } before:content-[''] before:absolute before:w-0 before:duration-300 before:bottom-0 before:bg-violet-100 before:left-0 before:h-0.5 hover:before:w-9`}
+                className={`relative  border-2 px-3 py-1 rounded  hover:bg-purple-700 ease-linear duration-100 ${
+                  pathname === "/auth" ? "bg-purple-700" : "bg-purple-500 "
+                }`}
                 to="/auth"
                 onClick={() => setMobileIsOpen((prev) => !prev)}
               >
