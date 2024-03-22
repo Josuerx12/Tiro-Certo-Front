@@ -41,19 +41,33 @@ const Navbar = () => {
           } md:top-0 md:relative flex md:flex-row flex-col gap-3 md:items-center tracking-wider bg-violet-950 ease-out transition-all duration-700`}
         >
           {user && (
-            <li>
-              <Link
-                to="/registros"
-                onClick={() => {
-                  setMobileIsOpen((prev) => !prev);
-                  setNewRegisterModalOpen((prev) => !prev);
-                }}
-                className={`relative flex gap-2 items-center "text-white"
+            <>
+              <li>
+                <Link
+                  to="/registros"
+                  onClick={() => {
+                    setMobileIsOpen((prev) => !prev);
+                    setNewRegisterModalOpen((prev) => !prev);
+                  }}
+                  className={`relative flex gap-2 items-center "text-white"
            before:content-[''] before:absolute before:w-0 before:duration-300 before:bottom-[-4px] before:bg-fuchsia-400 before:left-0 before:h-0.5 hover:before:w-4/5`}
-              >
-                <FaPlus /> Novo registro
-              </Link>
-            </li>
+                >
+                  <FaPlus /> Novo registro
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/"
+                  onClick={() => setMobileIsOpen((prev) => !prev)}
+                  className={`relative ${
+                    pathname === "/registros" ? "text-violet-300" : "text-white"
+                  } flex gap-2 items-center "text-white"
+           before:content-[''] before:absolute before:w-0 before:duration-300 before:bottom-[-4px] before:bg-fuchsia-400 before:left-0 before:h-0.5 hover:before:w-4/5`}
+                >
+                  Atividades
+                </Link>
+              </li>
+            </>
           )}
           <li>
             <Link
@@ -67,43 +81,42 @@ const Navbar = () => {
               Página Inicial
             </Link>
           </li>
-          {user?.admin ||
-            (user?.founder && (
-              <li>
-                <Dropdown title="Administração">
-                  <Link
-                    to="/usuarios"
-                    className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
-                  >
-                    <FaUsers /> Usuários
-                  </Link>
-                  <Link
-                    to="/atividadesDoUsuarios"
-                    className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
-                  >
-                    <GrNotes /> Registros de Atividades
-                  </Link>
-                  <Link
-                    to="/clubes"
-                    className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
-                  >
-                    <FaRing /> Clubes
-                  </Link>
-                  <Link
-                    to="/armas"
-                    className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
-                  >
-                    <GiPistolGun /> Acervo / Armas
-                  </Link>
-                  <Link
-                    to="/categoriasArmas"
-                    className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
-                  >
-                    <BiCategory /> Categorias de Arma
-                  </Link>
-                </Dropdown>
-              </li>
-            ))}
+          {(user?.admin || user?.founder) && (
+            <li>
+              <Dropdown title="Administração">
+                <Link
+                  to="/usuarios"
+                  className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
+                >
+                  <FaUsers /> Usuários
+                </Link>
+                <Link
+                  to="/atividadesDoUsuarios"
+                  className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
+                >
+                  <GrNotes /> Registros de Atividades
+                </Link>
+                <Link
+                  to="/clubes"
+                  className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
+                >
+                  <FaRing /> Clubes
+                </Link>
+                <Link
+                  to="/armas"
+                  className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
+                >
+                  <GiPistolGun /> Acervo / Armas
+                </Link>
+                <Link
+                  to="/categoriasArmas"
+                  className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
+                >
+                  <BiCategory /> Categorias de Arma
+                </Link>
+              </Dropdown>
+            </li>
+          )}
           {!user ? (
             <li>
               <Link

@@ -4,6 +4,10 @@ import { Modal } from "../../Modal";
 import { FaPen, FaTrash } from "react-icons/fa";
 import DeleteUserModal from "../Delete";
 import { useAuth } from "../../../../store/useAuth";
+import { useForm } from "react-hook-form";
+import { useUsers } from "../../../../hooks/useUsers";
+import { useMutation, useQueryClient } from "react-query";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 type Props = {
   isOpen: boolean;
@@ -11,11 +15,54 @@ type Props = {
   user: IUser;
 };
 
+type EditCredentials = {
+  ["profile-pic"]: FileList;
+  name: string;
+  email: string;
+  cpf: string;
+  cr: string;
+  password: string;
+  confirmPassword: string;
+};
+
 const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
   const { user: userLogged } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+
+  const { editOne } = useUsers();
+
+  const query = useQueryClient();
+
+  const { handleSubmit, register, reset } = useForm<EditCredentials>();
+  const credentials = new FormData();
+
+  const { isLoading, mutateAsync } = useMutation("editUser", editOne, {
+    onSuccess: () =>
+      Promise.all([
+        reset(),
+        handleCloseModal(),
+        query.invalidateQueries("users"),
+        setIsEditing(false),
+        setIsChangingPassword(false),
+      ]),
+  });
+
+  async function onSubmit(data: EditCredentials) {
+    if (data.name && data.name !== user.name)
+      credentials.append("name", data.name);
+    if (data.email && data.email !== user.email)
+      credentials.append("email", data.email);
+    if (data.cpf && data.cpf !== user.cpf) credentials.append("cpf", data.cpf);
+    if (data.cr && data.cr !== user.cr) credentials.append("cr", data.cr);
+    if (data.password) credentials.append("password", data.password);
+    if (data.confirmPassword) {
+      credentials.append("confirmPassword", data.confirmPassword);
+    }
+    mutateAsync({ id: user._id, credentials });
+  }
+
   return (
     <Modal
       show={isOpen}
@@ -63,13 +110,17 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
               )}
             </div>
 
-            <form className=" w-full flex flex-col gap-4">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className=" w-full flex flex-col gap-4"
+            >
               {isEditing && (
                 <div className="flex flex-wrap items-center gap-3">
                   <label className="font-bold text-violet-950 text-nowrap w-24">
                     Nova foto:
                   </label>
                   <input
+                    {...register("profile-pic")}
                     type="file"
                     accept="image/*"
                     className="flex flex-wrap flex-grow"
@@ -80,6 +131,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
                 <label className="font-bold text-violet-950 w-24">Nome:</label>
                 <input
                   type="text"
+                  {...register("name")}
                   disabled={!isEditing}
                   defaultValue={user.name}
                   className="rounded border-2 border-gray-100 outline-violet-600 p-1 w-full flex-grow"
@@ -88,6 +140,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
               <div className="flex items-center justify-between gap-3">
                 <label className="font-bold text-violet-950 w-24">Email:</label>
                 <input
+                  {...register("email")}
                   type="text"
                   disabled={!isEditing}
                   defaultValue={user.email}
@@ -97,6 +150,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
               <div className="flex items-center justify-between gap-3">
                 <label className="font-bold text-violet-950 w-24">CPF:</label>
                 <input
+                  {...register("cpf")}
                   type="text"
                   disabled={!isEditing}
                   defaultValue={user.cpf}
@@ -106,6 +160,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
               <div className="flex items-center justify-between gap-3">
                 <label className="font-bold text-violet-950 w-24">CR:</label>
                 <input
+                  {...register("cr")}
                   type="text"
                   disabled={!isEditing}
                   defaultValue={user.cr}
@@ -130,9 +185,10 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
                       Nova senha:
                     </label>
                     <input
-                      type="text"
+                      type="password"
+                      placeholder="********"
+                      {...register("password")}
                       disabled={!isEditing}
-                      defaultValue={user.cr}
                       className="rounded border-2 border-gray-100 outline-violet-600 p-1 w-full"
                     />
                   </div>
@@ -141,31 +197,43 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
                       Confirmar senha:
                     </label>
                     <input
-                      type="text"
+                      {...register("confirmPassword")}
+                      type="password"
                       disabled={!isEditing}
-                      defaultValue={user.cr}
+                      placeholder="********"
                       className="rounded border-2 border-gray-100 outline-violet-600 p-1 w-full"
                     />
                   </div>
                 </div>
               )}
+              {isEditing && (
+                <div className="flex justify-between gap-2">
+                  <button
+                    disabled={isLoading}
+                    onClick={() => {
+                      setIsEditing((prev) => !prev);
+                      setIsChangingPassword(false);
+                    }}
+                    className="w-full bg-red-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-red-600 ease-linear duration-100"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    disabled={isLoading}
+                    className="flex justify-center items-center gap-1 w-full bg-blue-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-blue-600 ease-linear duration-100"
+                  >
+                    {isLoading ? (
+                      <>
+                        Salvando
+                        <AiOutlineLoading3Quarters className="animate-spin duration-1000000 " />
+                      </>
+                    ) : (
+                      <>Salvar</>
+                    )}
+                  </button>
+                </div>
+              )}
             </form>
-            {isEditing && (
-              <div className="flex justify-between gap-2">
-                <button
-                  onClick={() => {
-                    setIsEditing((prev) => !prev);
-                    setIsChangingPassword(false);
-                  }}
-                  className="w-full bg-red-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-red-600 ease-linear duration-100"
-                >
-                  Cancelar
-                </button>
-                <button className="w-full bg-blue-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-blue-600 ease-linear duration-100">
-                  Salvar
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>

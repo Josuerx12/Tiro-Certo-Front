@@ -4,10 +4,10 @@ export interface IUser {
   _id: string;
   name: string;
   email: string;
-  cpf: number;
+  cpf: string;
   photoURL: string | null;
   admin: boolean;
   founder: boolean;
   updatedAt: string;
-  cr: number;
+  cr: string;
 }

@@ -36,7 +36,13 @@ function useClub() {
     }
   }
 
-  async function edit(id: string, credentials: FormData) {
+  async function edit({
+    id,
+    credentials,
+  }: {
+    id: string;
+    credentials: FormData;
+  }) {
     try {
       const payload = (await api(token).put("/clubs/" + id, credentials)).data
         .payload;

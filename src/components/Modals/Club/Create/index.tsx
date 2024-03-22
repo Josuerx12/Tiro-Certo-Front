@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { Modal } from "../../Modal";
 import { useRef } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { useClub } from "../../../../hooks/useClub";
@@ -26,11 +26,14 @@ const CreateClubModal = ({ isOpen, handleClose }: Props) => {
   const credentials = new FormData();
   const { create } = useClub();
 
+  const query = useQueryClient();
+
   const { mutateAsync, isLoading } = useMutation("createClub", create, {
-    onSuccess: () => Promise.all([]),
+    onSuccess: () =>
+      Promise.all([query.invalidateQueries("clubs"), handleClose()]),
   });
 
-  async function getLoc() {
+  function getLoc() {
     navigator.geolocation.getCurrentPosition((data) =>
       setValue(
         "geoLocation",

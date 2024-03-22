@@ -23,7 +23,13 @@ export function useUsers() {
       throw error;
     }
   }
-  async function editOne(id: string, credentials: FormData) {
+  async function editOne({
+    id,
+    credentials,
+  }: {
+    id: string;
+    credentials: FormData;
+  }) {
     try {
       const payload = (await api(token).put("/users/" + id, credentials)).data
         .payload;
