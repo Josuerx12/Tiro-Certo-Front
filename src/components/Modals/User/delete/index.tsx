@@ -1,9 +1,9 @@
 import { BsExclamationCircle } from "react-icons/bs";
 import { IUser } from "../../../../interfaces/IUser";
-import { Modal } from "../../modal";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useMutation, useQueryClient } from "react-query";
 import { useUsers } from "../../../../hooks/useUsers";
+import { Modal } from "../../Modal";
 
 type Props = {
   isOpen: boolean;

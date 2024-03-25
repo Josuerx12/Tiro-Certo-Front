@@ -7,10 +7,10 @@ import { useAuth } from "../../store/useAuth";
 import { UserDropdown } from "./UserDropdown";
 import { FaX } from "react-icons/fa6";
 import { FaPlus, FaRing, FaUsers } from "react-icons/fa";
-import { NewRegistro } from "../Modals/registro/new";
-import { Dropdown } from "../dropdown";
 import { GrNotes } from "react-icons/gr";
 import { BiCategory } from "react-icons/bi";
+import { Dropdown } from "../Dropdown";
+import { NewRegistro } from "../Modals/Registro/New";
 
 const Navbar = () => {
   const { pathname } = useLocation();

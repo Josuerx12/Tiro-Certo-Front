@@ -1,4 +1,4 @@
-import { Modal } from "../../modal";
+import { Modal } from "../../Modal";
 import { ICategories } from "../../../../interfaces/ICategories";
 import { BsExclamationCircle } from "react-icons/bs";
 import { useMutation, useQueryClient } from "react-query";

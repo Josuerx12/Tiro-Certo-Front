@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useWeaponCategory } from "../../../../hooks/useWeaponCategory";
-import { Modal } from "../../modal";
+import { Modal } from "../../Modal";
 import { ICategories } from "../../../../interfaces/ICategories";
 import Select from "react-select";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";

@@ -1,11 +1,12 @@
 import { useQuery, useQueryClient } from "react-query";
 import { useRegister } from "../../hooks/useRegister";
-import { SkeletonCard } from "../../components/cards/skeleton";
-import { RefreshButton } from "../../components/buttons/refreshButton";
 import { FaUserPlus } from "react-icons/fa";
-import { RegisterCard } from "../../components/cards/register";
-import { NewRegistro } from "../../components/Modals/registro/new";
+
+import { NewRegistro } from "../../components/Modals/Registro/New";
 import { useState } from "react";
+import { RegisterCard } from "../../components/Cards/Register";
+import { SkeletonCard } from "../../components/Cards/Skeleton";
+import { RefreshButton } from "../../components/Buttons/RefreshButton";
 
 const RegistrosPage = () => {
   const query = useQueryClient();
