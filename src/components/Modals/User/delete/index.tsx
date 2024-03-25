@@ -54,4 +54,4 @@ const DeleteUserModal = ({ isOpen, handleClose, user }: Props) => {
   );
 };
 
-export { DeleteUserModal };
+export default DeleteUserModal;

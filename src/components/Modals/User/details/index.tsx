@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { useUsers } from "../../../../hooks/useUsers";
 import { useMutation, useQueryClient } from "react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { DeleteUserModal } from "../Delete";
+import DeleteUserModal from "../Delete";
 type Props = {
   isOpen: boolean;
   handleCloseModal: () => void;
