@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { RefreshButton } from "../../../components/Buttons/RefreshButton";
+import { RefreshButton } from "../../../components/buttons/refreshButton";
 import { useQuery, useQueryClient } from "react-query";
 import { FaRing, FaUserPlus } from "react-icons/fa";
 import { useClub } from "../../../hooks/useClub";
-import { Loading } from "../../../components/Loading";
+import { Loading } from "../../../components/loading";
 import { IClub } from "../../../interfaces/IClub";
-import { ClubsTable } from "../../../components/Tables/ClubsTable";
-import { CreateClubModal } from "../../../components/Modals/Club/Create";
+import { ClubsTable } from "../../../components/tables/clubsTable";
+import { CreateClubModal } from "../../../components/Modals/Club/create";
 
 const ClubsAdminDashboard = () => {
   const [isCreating, setIsCreating] = useState(false);

@@ -1,6 +1,6 @@
 import { BsExclamationCircle } from "react-icons/bs";
 import { IUser } from "../../../../interfaces/IUser";
-import { Modal } from "../../Modal";
+import { Modal } from "../../modal";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useMutation, useQueryClient } from "react-query";
 import { useUsers } from "../../../../hooks/useUsers";

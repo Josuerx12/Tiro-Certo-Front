@@ -3,10 +3,10 @@ import { useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { useWeaponCategory } from "../../../hooks/useWeaponCategory";
 import { ICategories } from "../../../interfaces/ICategories";
-import { RefreshButton } from "../../../components/Buttons/RefreshButton";
-import { WeaponCategoriesTable } from "../../../components/Tables/WeaponCategoriesTable";
-import { Loading } from "../../../components/Loading";
-import NewWeaponCategoryModal from "../../../components/Modals/WeaponCategory/Create";
+import { RefreshButton } from "../../../components/buttons/refreshButton";
+import { WeaponCategoriesTable } from "../../../components/tables/weaponCategoriesTable";
+import { Loading } from "../../../components/loading";
+import NewWeaponCategoryModal from "../../../components/Modals/weaponCategory/create";
 
 const WeaponCategory = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);

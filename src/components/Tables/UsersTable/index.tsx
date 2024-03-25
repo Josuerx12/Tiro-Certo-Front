@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IUser } from "../../../interfaces/IUser";
-import { UserDetail } from "../../Modals/User/Details";
+import { UserDetail } from "../../Modals/user/details";
 
 const UsersTable = ({ user }: { user: IUser }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);

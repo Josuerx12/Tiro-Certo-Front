@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IClub } from "../../../interfaces/IClub";
-import { ClubDetailModal } from "../../Modals/Club/Details";
+import { ClubDetailModal } from "../../Modals/Club/details";
 
 const ClubsTable = ({ club }: { club: IClub }) => {
   const [isOpen, setIsOpen] = useState(false);

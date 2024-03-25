@@ -5,7 +5,7 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../store/useAuth";
-import { UserDetail } from "../../Modals/User/Details";
+import { UserDetail } from "../../Modals/user/details";
 
 type Props = {
   isOpen: boolean;

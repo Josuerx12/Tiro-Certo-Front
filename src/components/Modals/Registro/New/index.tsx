@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "react-query";
-import { Modal } from "../../Modal";
+import { Modal } from "../../modal";
 import { useClub } from "../../../../hooks/useClub";
 import { IClub } from "../../../../interfaces/IClub";
 import { useForm } from "react-hook-form";

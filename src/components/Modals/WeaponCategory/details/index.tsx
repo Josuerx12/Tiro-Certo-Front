@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useState } from "react";
 import { ICategories } from "../../../../interfaces/ICategories";
-import { Modal } from "../../Modal";
+import { Modal } from "../../modal";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import { useWeaponCategory } from "../../../../hooks/useWeaponCategory";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaPen, FaTrash } from "react-icons/fa";
-import { DeleteWeaponCategoryModal } from "../Delete";
+import { DeleteWeaponCategoryModal } from "../delete";
 
 type Props = {
   isOpen: boolean;

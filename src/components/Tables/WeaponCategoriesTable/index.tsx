@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ICategories } from "../../../interfaces/ICategories";
-import { WeaponCategoryDetailModal } from "../../Modals/WeaponCategory/Details";
+import { WeaponCategoryDetailModal } from "../../Modals/weaponCategory/details";
 
 const WeaponCategoriesTable = ({ category }: { category: ICategories }) => {
   const [isOpen, setIsOpen] = useState(false);

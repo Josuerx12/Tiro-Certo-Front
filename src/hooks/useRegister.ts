@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NewRegisterCredentials } from "../components/Modals/Registro/New";
+import { NewRegisterCredentials } from "../components/Modals/registro/new";
 import { api } from "../config/api";
 import Cookies from "js-cookie";
 import { IRegister } from "../interfaces/IRegister";
