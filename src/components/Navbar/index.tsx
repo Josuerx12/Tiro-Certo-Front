@@ -1,5 +1,5 @@
 import { IoMenu } from "react-icons/io5";
-import { GiCrossedPistols, GiPistolGun } from "react-icons/gi";
+import { GiCrossedPistols } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
@@ -7,7 +7,7 @@ import { useAuth } from "../../store/useAuth";
 import { UserDropdown } from "./UserDropdown";
 import { FaX } from "react-icons/fa6";
 import { FaPlus, FaRing, FaUsers } from "react-icons/fa";
-import { GrNotes } from "react-icons/gr";
+// import { GrNotes } from "react-icons/gr";
 import { BiCategory } from "react-icons/bi";
 import { Dropdown } from "../Dropdown";
 import { NewRegistro } from "../Modals/Registro/New";
@@ -57,7 +57,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  to="/"
+                  to="/atividadesDoUsuarios"
                   onClick={() => setMobileIsOpen((prev) => !prev)}
                   className={`relative ${
                     pathname === "/registros" ? "text-violet-300" : "text-white"
@@ -90,24 +90,24 @@ const Navbar = () => {
                 >
                   <FaUsers /> Usuários
                 </Link>
-                <Link
+                {/* <Link
                   to="/atividadesDoUsuarios"
                   className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
                 >
                   <GrNotes /> Registros de Atividades
-                </Link>
+                </Link> */}
                 <Link
                   to="/clubes"
                   className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
                 >
                   <FaRing /> Clubes
                 </Link>
-                <Link
+                {/* <Link
                   to="/armas"
                   className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
                 >
                   <GiPistolGun /> Acervo / Armas
-                </Link>
+                </Link> */}
                 <Link
                   to="/categoriasArmas"
                   className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
