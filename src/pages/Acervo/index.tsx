@@ -4,9 +4,9 @@ import { useQuery, useQueryClient } from "react-query";
 import { Loading } from "../../components/Loading";
 import { IWeapon } from "../../interfaces/IWeapon";
 import { RefreshButton } from "../../components/Buttons/RefreshButton";
-import { CreateWeaponModal } from "../../components/Modals/Weapon/Create";
 import { useState } from "react";
 import WeaponTable from "../../components/Tables/WeaponTable";
+import { CreateWeaponModal } from "../../components/Modals/Weapon/Create";
 
 const AcervoPage = () => {
   const { get } = useAcervo();

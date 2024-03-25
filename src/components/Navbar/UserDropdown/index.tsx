@@ -3,9 +3,9 @@ import { IUser } from "../../../interfaces/IUser";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-import { UserDetail } from "../../Modals/User/Details";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../../../store/useAuth";
+import { UserDetail } from "../../Modals/User/Details";
 
 type Props = {
   isOpen: boolean;
