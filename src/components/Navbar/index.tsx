@@ -57,7 +57,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  to="/atividadesDoUsuarios"
+                  to="/registros"
                   onClick={() => setMobileIsOpen((prev) => !prev)}
                   className={`relative ${
                     pathname === "/registros" ? "text-violet-300" : "text-white"
