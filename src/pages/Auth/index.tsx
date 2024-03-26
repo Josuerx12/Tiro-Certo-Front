@@ -5,6 +5,9 @@ import { useAuth } from "../../store/useAuth";
 import { useForm } from "react-hook-form";
 import { ILoginCredentials } from "../../interfaces/ILoginCredentials";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { FaEye } from "react-icons/fa";
+import { ErrorComponent } from "../../components/ErrorComponent";
 
 type MutationError = {
   email: { msg: string };
@@ -13,6 +16,7 @@ type MutationError = {
 
 const Auth = () => {
   const { login, getUser } = useAuth();
+  const [isHidden, setIsHidden] = useState(true);
   const { handleSubmit, register } = useForm({
     defaultValues: {
       email: "",
@@ -38,31 +42,49 @@ const Auth = () => {
     <div className="flex-1 mx-auto mt-10 w-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-3 mx-auto m-2 border w-2/4 p-2 rounded max-sm:w-72 shadow shadow-violet-1 300"
+        className="flex flex-col gap-3 mx-auto m-2 border w-3/4  md:w-2/4 p-2 rounded max-sm:w-72 shadow shadow-violet-1"
       >
         <h3 className="text-xl text-center mt-2 mb-2">
           Faça login para acessar
         </h3>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-3">
           <label>Email:</label>
           <input
             {...register("email")}
             type="text"
             required
             placeholder="Digite seu login!"
-            className="rounded border-2 border-gray-100 outline-violet-600 p-1 mt-3"
+            className="rounded border-2 border-gray-100 outline-violet-600 p-2"
           />
+          {error && error.email && (
+            <ErrorComponent>{error.email.msg}</ErrorComponent>
+          )}
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-3">
           <label>Senha:</label>
-          <input
-            {...register("password")}
-            type="text"
-            required
-            placeholder="Digite sua senha!"
-            className="rounded border-2 border-gray-100 outline-violet-600 p-1 mt-3"
-          />
+          <div className="flex gap-2 items-center">
+            <input
+              {...register("password")}
+              type={isHidden ? "password" : "text"}
+              required
+              placeholder="Digite sua senha!"
+              className="rounded border-2 border-gray-100 outline-violet-600 p-2 flex-1"
+            />
+            <button
+              onClick={() => setIsHidden((prev) => !prev)}
+              type="button"
+              className="flex items-center bg-violet-600 text-white p-2 rounded gap-2 border-2 border-gray-100 hover:bg-violet-500"
+            >
+              <span className="hidden sm:block">
+                {isHidden ? "Mostrar" : "Ocultar"}
+              </span>{" "}
+              <FaEye />
+            </button>
+          </div>
+          {error && error.password && (
+            <ErrorComponent>{error.password.msg}</ErrorComponent>
+          )}
           <Link to="/recovery" className="text-blue-500 p-1 w-fit">
             Esqueci minha senha!
           </Link>

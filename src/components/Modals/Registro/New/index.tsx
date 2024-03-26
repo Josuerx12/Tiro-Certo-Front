@@ -10,7 +10,7 @@ import { useAcervo } from "../../../../hooks/useAcervo";
 import { IWeapon } from "../../../../interfaces/IWeapon";
 import { ICategories } from "../../../../interfaces/ICategories";
 import { useWeaponCategory } from "../../../../hooks/useWeaponCategory";
-import { FaLocationCrosshairs } from "react-icons/fa6";
+import { FaLocationCrosshairs, FaPersonRifle } from "react-icons/fa6";
 import { useRegister } from "../../../../hooks/useRegister";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
@@ -107,7 +107,7 @@ const NewRegistro = ({ isOpen, handleClose }: Props) => {
             required
             defaultValue=""
             {...register("clubId")}
-            className="bg-slate-200 rounded outline-violet-600 flex-1 p-1"
+            className="rounded border-2 border-gray-100 outline-violet-600 p-2"
           >
             <option value="">Selecione um Clube</option>
             {clubs.data?.map((club) => (
@@ -121,7 +121,7 @@ const NewRegistro = ({ isOpen, handleClose }: Props) => {
           <select
             required
             {...register("activity")}
-            className="bg-slate-200 rounded outline-violet-600 flex-1 p-1"
+            className="flex-1 rounded border-2 border-gray-100 outline-violet-600 p-2"
           >
             <option value="">Selecione uma opção</option>
             <option value="treinamento">Treino</option>
@@ -130,11 +130,12 @@ const NewRegistro = ({ isOpen, handleClose }: Props) => {
         </div>
 
         <div className="flex flex-col gap-2 flex-grow">
-          <label className="text-nowrap">Armas Utilizadas: </label>
           {usedWeapons?.map((w) => (
             <div className="w-full flex gap-3 flex-wrap" key={w.id}>
               <div className="flex flex-col gap-2 flex-1">
-                <label>Armamento</label>
+                <label className="flex gap-2 items-center">
+                  Arma Utilizada <FaPersonRifle />
+                </label>
                 <select
                   required
                   onChange={async (e) => {
@@ -167,7 +168,7 @@ const NewRegistro = ({ isOpen, handleClose }: Props) => {
                       )
                     );
                   }}
-                  className="bg-slate-200 rounded outline-violet-600 flex-1 p-1"
+                  className="rounded border-2 border-gray-100 outline-violet-600 p-2"
                 >
                   <option value="">Selecione um armamento</option>
                   {userWeapons.data?.map((uW) => (
@@ -182,7 +183,7 @@ const NewRegistro = ({ isOpen, handleClose }: Props) => {
                 <input
                   type="number"
                   required
-                  className="rounded border-2 border-gray-100 outline-violet-600 flex-1 p-1"
+                  className="rounded border-2 border-gray-100 outline-violet-600 flex-1 p-2"
                   onChange={(e) =>
                     setUsedWeapons((prev) =>
                       prev.map((usedW) =>
@@ -230,7 +231,7 @@ const NewRegistro = ({ isOpen, handleClose }: Props) => {
               ])
             }
             type="button"
-            className="flex items-center gap-2 bg-gray-800 text-white w-fit px-2 py-2 rounded hover:bg-gray-950 ease-in-out duration-100"
+            className="flex items-center gap-2 bg-gray-600 text-white w-fit px-2 py-2 rounded hover:bg-gray-500 ease-in-out duration-100"
           >
             <FaPlus /> Adicionar Armamento
           </button>
@@ -254,7 +255,7 @@ const NewRegistro = ({ isOpen, handleClose }: Props) => {
             type="button"
             onClick={getLoc}
             title="Clique aqui para coletar sua localização!"
-            className="w-fit bg-violet-800 text-white flex items-center gap-2 p-2 rounded "
+            className="w-fit bg-violet-800 hover:bg-violet-700 text-white flex items-center gap-2 p-2 rounded "
           >
             <FaLocationCrosshairs /> Coletar Localização
           </button>

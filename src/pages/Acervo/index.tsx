@@ -6,7 +6,7 @@ import { useState } from "react";
 import { CreateWeaponModal } from "../../components/Modals/Weapon/create";
 import { RefreshButton } from "../../components/Buttons/RefreshButton";
 import { Loading } from "../../components/Loading";
-import WeaponTable from "../../components/Tables/WeaponTable";
+import WeaponsCard from "../../components/Cards/Weapons";
 
 const AcervoPage = () => {
   const { get } = useAcervo();
@@ -33,29 +33,15 @@ const AcervoPage = () => {
           <FaGun /> Nova arma
         </button>
       </div>
-      {isLoading ? (
-        <Loading />
-      ) : data && data?.length > 0 ? (
-        <table className="w-4/5 border-collapse border border-gray-300 ">
-          <thead>
-            <tr className="bg-gray-200">
-              <th className="border border-gray-300 py-1 px-2">Foto</th>
-              <th className="border border-gray-300 py-1 px-2">Categoria</th>
-              <th className="border border-gray-300 py-1 px-2">Nome</th>
-              <th className="border border-gray-300 py-1 px-2">Modelo</th>
-              <th className="border border-gray-300 py-1 px-2">Validade</th>
-              <th className="border border-gray-300 py-1 px-2">Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((weapon) => (
-              <WeaponTable key={weapon._id} weapon={weapon} />
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>Nenhuma arma cadastrada para seu usuário!</p>
-      )}
+      <div className="flex flex-col w-4/5 gap-3">
+        {isLoading ? (
+          <Loading />
+        ) : data && data?.length > 0 ? (
+          data.map((weapon) => <WeaponsCard weapon={weapon} key={weapon._id} />)
+        ) : (
+          <p>Nenhuma arma cadastrada para seu usuário!</p>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { IUser } from "../../../../interfaces/IUser";
 import { useState } from "react";
-import { FaPen, FaTrash } from "react-icons/fa";
+import { FaEye, FaPen, FaTrash } from "react-icons/fa";
 import { useAuth } from "../../../../store/useAuth";
 import { useForm } from "react-hook-form";
 import { useUsers } from "../../../../hooks/useUsers";
@@ -29,6 +29,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
 
   const { editOne } = useUsers();
 
@@ -45,6 +46,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
         query.invalidateQueries("users"),
         setIsEditing(false),
         setIsChangingPassword(false),
+        setIsHidden(true),
       ]),
   });
 
@@ -61,7 +63,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
     if (data.confirmPassword) {
       credentials.append("confirmPassword", data.confirmPassword);
     }
-    mutateAsync({ id: user._id, credentials });
+    await mutateAsync({ id: user._id, credentials });
   }
 
   return (
@@ -72,6 +74,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
         handleCloseModal();
         setIsEditing(false);
         setIsChangingPassword(false);
+        setIsHidden(true);
       }}
     >
       <DeleteUserModal
@@ -180,30 +183,54 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
                 </button>
               )}
               {isChangingPassword && (
-                <div className="flex gap-3 flex-wrap">
-                  <div className="flex flex-wrap items-center justify-between gap-3 w-full">
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-3 flex-1">
                     <label className="font-bold text-violet-950 text-nowrap">
                       Nova senha:
                     </label>
-                    <input
-                      type="password"
-                      placeholder="********"
-                      {...register("password")}
-                      disabled={!isEditing}
-                      className="rounded border-2 border-gray-100 outline-violet-600 p-1 w-full"
-                    />
+                    <div className=" flex gap-2">
+                      <input
+                        type={isHidden ? "password" : "text"}
+                        placeholder="********"
+                        {...register("password")}
+                        disabled={!isEditing}
+                        className="rounded border-2 border-gray-100 outline-violet-600 p-1 w-full"
+                      />
+                      <button
+                        onClick={() => setIsHidden((prev) => !prev)}
+                        type="button"
+                        className="flex items-center bg-violet-600 text-white p-2 rounded gap-2 border-2 border-gray-100 hover:bg-violet-500"
+                      >
+                        <span className="hidden sm:block">
+                          {isHidden ? "Mostrar" : "Ocultar"}
+                        </span>{" "}
+                        <FaEye />
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex flex-wrap items-center justify-between gap-3 w-full">
+                  <div className="flex flex-col gap-3 flex-1">
                     <label className="font-bold text-violet-950 text-nowrap">
                       Confirmar senha:
                     </label>
-                    <input
-                      {...register("confirmPassword")}
-                      type="password"
-                      disabled={!isEditing}
-                      placeholder="********"
-                      className="rounded border-2 border-gray-100 outline-violet-600 p-1 w-full"
-                    />
+                    <div className=" flex gap-2">
+                      <input
+                        {...register("confirmPassword")}
+                        type={isHidden ? "password" : "text"}
+                        disabled={!isEditing}
+                        placeholder="********"
+                        className="rounded border-2 border-gray-100 outline-violet-600 p-2 flex-1"
+                      />
+                      <button
+                        onClick={() => setIsHidden((prev) => !prev)}
+                        type="button"
+                        className="flex items-center bg-violet-600 text-white p-2 rounded gap-2 border-2 border-gray-100 hover:bg-violet-500"
+                      >
+                        <span className="hidden sm:block">
+                          {isHidden ? "Mostrar" : "Ocultar"}
+                        </span>{" "}
+                        <FaEye />
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -214,6 +241,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
                     onClick={() => {
                       setIsEditing((prev) => !prev);
                       setIsChangingPassword(false);
+                      setIsHidden(true);
                     }}
                     className="w-full bg-red-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-red-600 ease-linear duration-100"
                   >
