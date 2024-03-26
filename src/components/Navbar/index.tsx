@@ -29,7 +29,7 @@ const Navbar = () => {
         <Link to="/" className="z-[-999] text-violet-50">
           <h3 className="flex gap-2 justify-center text-xl font-bold">
             <GiCrossedPistols className=" text-3xl" />
-            <span>Tiro Certo</span>
+            <span>C.C.T.E</span>
           </h3>
         </Link>
 
