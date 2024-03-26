@@ -1,6 +1,5 @@
 import { IUser } from "../../../../interfaces/IUser";
 import { useState } from "react";
-import { Modal } from "../../modal";
 import { FaPen, FaTrash } from "react-icons/fa";
 import { useAuth } from "../../../../store/useAuth";
 import { useForm } from "react-hook-form";
@@ -8,6 +7,7 @@ import { useUsers } from "../../../../hooks/useUsers";
 import { useMutation, useQueryClient } from "react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import DeleteUserModal from "../delete";
+import { Modal } from "../../Modal";
 type Props = {
   isOpen: boolean;
   handleCloseModal: () => void;

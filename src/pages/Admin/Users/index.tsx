@@ -1,12 +1,13 @@
 import { useQuery, useQueryClient } from "react-query";
 import { useUsers } from "../../../hooks/useUsers";
-import { Loading } from "../../../components/loading";
-import { UsersTable } from "../../../components/tables/usersTable";
 import { IUser } from "../../../interfaces/IUser";
-import { RefreshButton } from "../../../components/buttons/refreshButton";
+
 import { FaUserPlus } from "react-icons/fa";
 import { useState } from "react";
-import { CreateUserModal } from "../../../components/Modals/user/create";
+import { CreateUserModal } from "../../../components/Modals/User/create";
+import { RefreshButton } from "../../../components/Buttons/RefreshButton";
+import { Loading } from "../../../components/Loading";
+import { UsersTable } from "../../../components/Tables/UsersTable";
 
 const UsersAdminDashboard = () => {
   const { getAll } = useUsers();

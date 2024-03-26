@@ -1,5 +1,5 @@
 import { BsExclamationCircle } from "react-icons/bs";
-import { Modal } from "../../modal";
+import { Modal } from "../../Modal";
 import { useMutation, useQueryClient } from "react-query";
 import { IClub } from "../../../../interfaces/IClub";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";

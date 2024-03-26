@@ -1,13 +1,13 @@
 import { FaPen, FaTrash } from "react-icons/fa";
 import { IClub } from "../../../../interfaces/IClub";
-import { Modal } from "../../modal";
+import { Modal } from "../../Modal";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { useClub } from "../../../../hooks/useClub";
 import { useMutation, useQueryClient } from "react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import DeleteClubModal from "../delete";
+import DeleteClubModal from "../Delete";
 
 type Props = {
   isOpen: boolean;

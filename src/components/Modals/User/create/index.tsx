@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef } from "react";
-import { Modal } from "../../modal";
+import { Modal } from "../../Modal";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";

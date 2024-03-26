@@ -1,14 +1,14 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Auth } from "./pages/auth";
 import { Navbar } from "./components/Navbar";
-import { Footer } from "./components/footer";
 import { useAuth } from "./store/useAuth";
 import { useEffect } from "react";
-import { RegistrosPage } from "./pages/registros";
-import { WeaponCategory } from "./pages/admin/weaponCategory";
-import { UsersAdminDashboard } from "./pages/admin/users";
-import { AcervoPage } from "./pages/acervo";
-import { ClubsAdminDashboard } from "./pages/admin/clubs";
+import { RegistrosPage } from "./pages/Registros";
+import { Auth } from "./pages/Auth";
+import { WeaponCategory } from "./pages/Admin/WeaponCategory";
+import { AcervoPage } from "./pages/Acervo";
+import { UsersAdminDashboard } from "./pages/Admin/Users";
+import { ClubsAdminDashboard } from "./pages/Admin/Clubs";
+import { Footer } from "./components/Footer";
 
 const App = () => {
   const { user, getUser } = useAuth();

@@ -1,12 +1,12 @@
 import { FaGun, FaPersonRifle } from "react-icons/fa6";
 import { useAcervo } from "../../hooks/useAcervo";
 import { useQuery, useQueryClient } from "react-query";
-import { Loading } from "../../components/loading";
 import { IWeapon } from "../../interfaces/IWeapon";
-import { RefreshButton } from "../../components/buttons/refreshButton";
 import { useState } from "react";
-import WeaponTable from "../../components/tables/weaponTable";
-import { CreateWeaponModal } from "../../components/Modals/weapon/create";
+import { CreateWeaponModal } from "../../components/Modals/Weapon/create";
+import { RefreshButton } from "../../components/Buttons/RefreshButton";
+import { Loading } from "../../components/Loading";
+import WeaponTable from "../../components/Tables/WeaponTable";
 
 const AcervoPage = () => {
   const { get } = useAcervo();
