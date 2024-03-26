@@ -49,6 +49,8 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
   });
 
   async function onSubmit(data: EditCredentials) {
+    if (data["profile-pic"])
+      credentials.append("profile-pic", data["profile-pic"][0]);
     if (data.name && data.name !== user.name)
       credentials.append("name", data.name);
     if (data.email && data.email !== user.email)
