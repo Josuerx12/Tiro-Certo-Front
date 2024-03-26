@@ -86,7 +86,7 @@ const CreateWeaponModal = ({ isOpen, handleClose }: Props) => {
           <label className="text-nowrap">Registro da Arma: </label>
           <input
             {...register("registro")}
-            type="number"
+            type="text"
             placeholder="Nº Registro da arma"
             className="rounded border-2 border-gray-100 outline-violet-600 flex-1 p-1"
           />
