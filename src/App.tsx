@@ -9,6 +9,7 @@ import { AcervoPage } from "./pages/Acervo";
 import { UsersAdminDashboard } from "./pages/Admin/Users";
 import { ClubsAdminDashboard } from "./pages/Admin/Clubs";
 import { Footer } from "./components/Footer";
+import NovoRegistro from "./pages/NovoRegistro";
 
 const App = () => {
   const { user, getUser } = useAuth();
@@ -29,6 +30,7 @@ const App = () => {
           path="/registros"
           element={user ? <RegistrosPage /> : <Navigate to="/auth" />}
         />
+        <Route path="/novoRegistro" element={<NovoRegistro />} />
         <Route
           path="/categoriasArmas"
           element={

@@ -2,12 +2,22 @@
 /* eslint-disable no-useless-catch */
 import Cookies from "js-cookie";
 import { api } from "../config/api";
+import { IUser } from "../interfaces/IUser";
 
 export function useUsers() {
   const token = Cookies.get("refreshToken");
   async function get() {
     try {
       const payload = (await api(token).get("/users")).data.payload;
+
+      return payload;
+    } catch (error: any) {
+      throw error;
+    }
+  }
+  async function getOne(cpf: string): Promise<IUser> {
+    try {
+      const payload = (await api().get("/users/one/" + cpf)).data.payload;
 
       return payload;
     } catch (error: any) {
@@ -56,5 +66,5 @@ export function useUsers() {
     }
   }
 
-  return { get, getAll, editOne, register, deleteOne };
+  return { get, getAll, getOne, editOne, register, deleteOne };
 }

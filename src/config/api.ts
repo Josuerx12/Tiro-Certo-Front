@@ -5,7 +5,7 @@ export const api = (token?: string) => {
 
   if (token) {
     return (connection = axios.create({
-      baseURL: "https://tiro-facil.vercel.app/",
+      baseURL: "http://localhost:3333/",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -13,7 +13,7 @@ export const api = (token?: string) => {
   }
 
   connection = axios.create({
-    baseURL: "https://tiro-facil.vercel.app/",
+    baseURL: "http://localhost:3333/",
   });
 
   return connection;

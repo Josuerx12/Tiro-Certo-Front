@@ -45,19 +45,6 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/registros"
-                  onClick={() => {
-                    setMobileIsOpen((prev) => !prev);
-                    setNewRegisterModalOpen((prev) => !prev);
-                  }}
-                  className={`relative flex gap-2 items-center "text-white"
-           before:content-[''] before:absolute before:w-0 before:duration-300 before:bottom-[-4px] before:bg-fuchsia-400 before:left-0 before:h-0.5 hover:before:w-4/5`}
-                >
-                  <FaPlus /> Novo registro
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/registros"
                   onClick={() => setMobileIsOpen((prev) => !prev)}
                   className={`relative ${
                     pathname === "/registros" ? "text-violet-300" : "text-white"
@@ -69,6 +56,18 @@ const Navbar = () => {
               </li>
             </>
           )}
+          <li>
+            <Link
+              to="/novoRegistro"
+              onClick={() => {
+                setMobileIsOpen((prev) => !prev);
+              }}
+              className={`relative flex gap-2 items-center "text-white"
+           before:content-[''] before:absolute before:w-0 before:duration-300 before:bottom-[-4px] before:bg-fuchsia-400 before:left-0 before:h-0.5 hover:before:w-4/5`}
+            >
+              <FaPlus /> Novo registro
+            </Link>
+          </li>
           <li>
             <Link
               to="/"
