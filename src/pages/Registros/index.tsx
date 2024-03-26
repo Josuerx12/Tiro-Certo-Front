@@ -38,11 +38,15 @@ const RegistrosPage = () => {
       </div>
 
       <div className="bg-slate-100 border shadow-sm w-11/12 sm:w-4/5 p-2 h-[70dvh] mb-3 mx-2 rounded  flex flex-col gap-3 overflow-auto">
-        {isLoading
-          ? Array.from(Array(10)).map((_, i) => <SkeletonCard key={i} />)
-          : data?.map((register) => (
-              <RegisterCard key={register._id} register={register} />
-            ))}
+        {isLoading ? (
+          Array.from(Array(10)).map((_, i) => <SkeletonCard key={i} />)
+        ) : data && data?.length > 0 ? (
+          data?.map((register) => (
+            <RegisterCard key={register._id} register={register} />
+          ))
+        ) : (
+          <p>Nenhuma atividade registrada até o momento!</p>
+        )}
       </div>
     </div>
   );
