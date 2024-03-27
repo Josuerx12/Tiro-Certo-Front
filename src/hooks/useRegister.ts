@@ -30,6 +30,17 @@ function useRegister() {
       throw error;
     }
   }
+  async function userRegistersById(userId: string): Promise<IRegister[]> {
+    try {
+      const payload = (
+        await api(token).get("/activityRegisters/user/" + userId)
+      ).data.payload;
+
+      return payload;
+    } catch (error: any) {
+      throw error.data.response.error;
+    }
+  }
   async function allRegisters(): Promise<IRegister[]> {
     try {
       const payload = (await api(token).get("/activityRegisters/all")).data
@@ -51,7 +62,13 @@ function useRegister() {
     }
   }
 
-  return { create, userRegisters, oneRegister, allRegisters };
+  return {
+    create,
+    userRegisters,
+    oneRegister,
+    allRegisters,
+    userRegistersById,
+  };
 }
 
 export { useRegister };

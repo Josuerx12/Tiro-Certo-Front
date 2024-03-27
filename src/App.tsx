@@ -26,10 +26,7 @@ const App = () => {
           path="/auth"
           element={user ? <Navigate to="/registros" /> : <Auth />}
         />
-        <Route
-          path="/registros"
-          element={user ? <RegistrosPage /> : <Navigate to="/auth" />}
-        />
+        <Route path="/registros" element={<RegistrosPage />} />
         <Route path="/novoRegistro" element={<NovoRegistro />} />
         <Route
           path="/categoriasArmas"

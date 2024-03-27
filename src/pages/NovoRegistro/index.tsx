@@ -14,7 +14,6 @@ import { ICategories } from "../../interfaces/ICategories";
 import { useWeaponCategory } from "../../hooks/useWeaponCategory";
 import { useRegister } from "../../hooks/useRegister";
 import { ErrorComponent } from "../../components/ErrorComponent";
-import { IUser } from "../../interfaces/IUser";
 
 type WeaponRegister = {
   id: string;
@@ -29,7 +28,6 @@ type WeaponRegister = {
 
 const NovoRegistro = () => {
   const [step, setStep] = useState(0);
-  const [user, setUser] = useState<IUser | undefined>(undefined);
 
   const [acervo, setAcervo] = useState<IWeapon[] | undefined>(undefined);
   const { get } = useClub();
@@ -52,20 +50,13 @@ const NovoRegistro = () => {
         setStep(1),
         setValue("userId", data._id),
         getUserAcervo.mutateAsync(data._id),
-        setUser(data),
       ]),
   });
 
   const { create } = useRegister();
 
   const createRegister = useMutation("createRegister", create, {
-    onSuccess: () =>
-      Promise.all([
-        reset(),
-        resetUsedWeapons(),
-        setStep(0),
-        setUser(undefined),
-      ]),
+    onSuccess: () => Promise.all([reset(), resetUsedWeapons(), setStep(0)]),
   });
 
   const [usedWeapons, setUsedWeapons] = useState<WeaponRegister[]>([
@@ -115,7 +106,6 @@ const NovoRegistro = () => {
     reset();
     resetUsedWeapons();
     setStep(0);
-    setUser(undefined);
   }
 
   return (
@@ -128,18 +118,20 @@ const NovoRegistro = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-4/5 bg-violet-50 p-3 rounded m-2 gap-2"
       >
-        {user && (
+        {findUser.data && (
           <div className="flex flex-col gap-1">
             <img
               className="w-48 h-48 rounded-full shadow m-auto"
-              src={user.photoURL ? user.photoURL : "/noImage.jpg"}
+              src={
+                findUser.data.photoURL ? findUser.data.photoURL : "/noImage.jpg"
+              }
             />
             <div className="flex flex-col gap-1">
               <label className=" text-md text-neutral-700">Nome:</label>
 
               <input
                 type="text"
-                value={user.name}
+                value={findUser.data.name}
                 required
                 disabled
                 title="Seu Nome"
@@ -151,19 +143,7 @@ const NovoRegistro = () => {
 
               <input
                 type="text"
-                value={user.cpf}
-                required
-                disabled
-                title="Seu CPF"
-                className="rounded border-2 bg-gray-200 border-gray-100 outline-violet-600 p-1 w-full"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className=" text-md text-neutral-700">Email:</label>
-
-              <input
-                type="text"
-                value={user.email}
+                value={findUser.data.cpf}
                 required
                 disabled
                 title="Seu CPF"
@@ -272,7 +252,7 @@ const NovoRegistro = () => {
         {step === 3 && (
           <div className="flex flex-col gap-2 flex-grow">
             {usedWeapons?.map((w) => (
-              <div className="w-full flex gap-3 flex-wrap" key={w.id}>
+              <div className="flex gap-3 flex-wrap" key={w.id}>
                 <div className="flex flex-col gap-2 flex-1">
                   <label className="flex gap-2 items-center">
                     Arma Utilizada <FaPersonRifle />
@@ -336,7 +316,7 @@ const NovoRegistro = () => {
                     }
                   />
                 </div>
-                <div className="flex flex-col gap-2 items-center md:justify-end">
+                <div className="flex-grow sm:flex-grow-0 flex flex-col gap-2 items-center md:justify-end">
                   <button
                     title="remover esse campo!"
                     type="button"
@@ -348,7 +328,7 @@ const NovoRegistro = () => {
                         return prev.filter((puww) => puww.id !== w.id);
                       })
                     }
-                    className=" bg-red-600 text-white p-2 rounded flex items-center justify-center"
+                    className="w-full gap-2 bg-red-600 text-white p-2 rounded flex items-center justify-center"
                   >
                     Remover <FaTrash />
                   </button>
@@ -371,7 +351,7 @@ const NovoRegistro = () => {
                 ])
               }
               type="button"
-              className="flex items-center gap-2 bg-gray-600 text-white w-fit px-2 py-2 rounded hover:bg-gray-500 ease-in-out duration-100"
+              className="flex w-full justify-center items-center gap-2 bg-gray-600 text-white px-2 py-2 rounded hover:bg-gray-500 ease-in-out duration-100"
             >
               <FaPlus /> Adicionar Armamento
             </button>
