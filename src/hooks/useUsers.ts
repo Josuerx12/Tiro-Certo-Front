@@ -12,7 +12,7 @@ export function useUsers() {
 
       return payload;
     } catch (error: any) {
-      throw error;
+      throw error.response.data.error;
     }
   }
   async function getOne(cpf: string): Promise<IUser> {
@@ -21,7 +21,7 @@ export function useUsers() {
 
       return payload;
     } catch (error: any) {
-      throw error;
+      throw error.response.data.error;
     }
   }
   async function getAll() {
@@ -30,7 +30,7 @@ export function useUsers() {
 
       return payload;
     } catch (error: any) {
-      throw error;
+      throw error.response.data.error;
     }
   }
   async function editOne({

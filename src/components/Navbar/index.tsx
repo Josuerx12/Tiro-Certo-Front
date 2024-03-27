@@ -40,22 +40,19 @@ const Navbar = () => {
               : "top-[-400px] opacity-0"
           } md:top-0 md:relative flex md:flex-row flex-col gap-3 md:items-center tracking-wider bg-violet-950 ease-out transition-all duration-700`}
         >
-          {user && (
-            <>
-              <li>
-                <Link
-                  to="/registros"
-                  onClick={() => setMobileIsOpen((prev) => !prev)}
-                  className={`relative ${
-                    pathname === "/registros" ? "text-violet-300" : "text-white"
-                  } flex gap-2 items-center "text-white"
+          <li>
+            <Link
+              to="/registros"
+              onClick={() => setMobileIsOpen((prev) => !prev)}
+              className={`relative ${
+                pathname === "/registros" ? "text-violet-300" : "text-white"
+              } flex gap-2 items-center "text-white"
            before:content-[''] before:absolute before:w-0 before:duration-300 before:bottom-[-4px] before:bg-fuchsia-400 before:left-0 before:h-0.5 hover:before:w-4/5`}
-                >
-                  Atividades
-                </Link>
-              </li>
-            </>
-          )}
+            >
+              Atividades
+            </Link>
+          </li>
+
           <li>
             <Link
               to="/novoRegistro"

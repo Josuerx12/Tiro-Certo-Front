@@ -10,6 +10,7 @@ import { UsersAdminDashboard } from "./pages/Admin/Users";
 import { ClubsAdminDashboard } from "./pages/Admin/Clubs";
 import { Footer } from "./components/Footer";
 import NovoRegistro from "./pages/NovoRegistro";
+import { Alert } from "./components/Alert";
 
 const App = () => {
   const { user, getUser } = useAuth();
