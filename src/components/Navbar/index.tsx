@@ -116,7 +116,7 @@ const Navbar = () => {
           {!user ? (
             <li>
               <Link
-                className={`relative  border-2 px-3 py-1 rounded  hover:bg-purple-700 ease-linear duration-100 ${
+                className={`relative px-3 py-1 border rounded-full  hover:bg-purple-700 hover:border-black ease-linear duration-100 ${
                   pathname === "/auth" ? "bg-purple-700" : "bg-purple-500 "
                 }`}
                 to="/auth"

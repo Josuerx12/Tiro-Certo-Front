@@ -1,6 +1,7 @@
 import { FaDatabase } from "react-icons/fa";
 import { IRegister } from "../../../interfaces/IRegister";
 import { FaGun } from "react-icons/fa6";
+import { format } from "date-fns";
 
 const RegisterCard = ({ register }: { register: IRegister }) => {
   return (
@@ -24,6 +25,10 @@ const RegisterCard = ({ register }: { register: IRegister }) => {
         <p>
           <span className="font-bold">Atividade: </span>
           {register.activity}
+        </p>
+        <p>
+          <span className="font-bold">Execução: </span>{" "}
+          {format(register.createdAt, "dd/MM/yyyy")}
         </p>
       </div>
 

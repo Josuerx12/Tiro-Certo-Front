@@ -49,19 +49,19 @@ const RegistrosPage = () => {
           <>Atividades registradas ({findUser.data.name})</>
         )}
       </h3>
-      <div className="w-4/5 flex justify-end my-2 gap-2">
+      <div className="w-4/5 flex-wrap flex justify-end gap-2">
         <button
           onClick={handleNewSearch}
-          className="flex items-center gap-2 bg-blue-700 text-white p-2 rounded hover:bg-blue-600 ease-linear duration-100"
+          className="flex flex-grow sm:flex-grow-0  justify-center items-center gap-2 bg-blue-700 text-white p-2 rounded hover:bg-blue-600 ease-linear duration-100"
         >
           Nova pesquisa <FaMagnifyingGlass />
         </button>
-        <button className="flex items-center gap-2 bg-green-700 text-white p-2 rounded hover:bg-green-600 ease-linear duration-100">
+        <button className="flex flex-grow sm:flex-grow-0 justify-center items-center gap-2 bg-green-700 text-white p-2 rounded hover:bg-green-600 ease-linear duration-100">
           Extrair relatorio <FaRegFileExcel />
         </button>
         <Link
           to="/novoRegistro"
-          className="flex items-center gap-2 bg-violet-700 text-white p-2 rounded hover:bg-violet-600 ease-linear duration-100"
+          className="flex flex-grow justify-center sm:flex-grow-0 items-center gap-2 bg-violet-700 text-white p-2 rounded hover:bg-violet-600 ease-linear duration-100"
         >
           <FaUserPlus /> Novo Registro
         </Link>
@@ -99,7 +99,7 @@ const RegistrosPage = () => {
         </form>
       )}
 
-      <div className="bg-neutral-50 border-indigo-200 border shadow w-11/12 sm:w-4/5 p-2 h-[70dvh] mb-3 mx-2 rounded  flex flex-col gap-3 overflow-auto">
+      <div className="bg-neutral-50 border-indigo-200 border shadow w-11/12 sm:w-4/5 h-[70dvh] mb-3 mx-2 rounded p-6 flex flex-col gap-6 overflow-auto">
         {isLoading ? (
           Array.from(Array(10)).map((_, i) => <SkeletonCard key={i} />)
         ) : data ? (

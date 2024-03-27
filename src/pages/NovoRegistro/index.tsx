@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { v4 } from "uuid";
-import { FaArrowRight, FaPlus, FaTrash } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaPlus, FaTrash } from "react-icons/fa";
 import { useMutation, useQuery } from "react-query";
 import { useClub } from "../../hooks/useClub";
 import { IClub } from "../../interfaces/IClub";
@@ -56,7 +56,7 @@ const NovoRegistro = () => {
   const { create } = useRegister();
 
   const createRegister = useMutation("createRegister", create, {
-    onSuccess: () => Promise.all([reset(), resetUsedWeapons(), setStep(0)]),
+    onSuccess: () => handleCancel(),
   });
 
   const [usedWeapons, setUsedWeapons] = useState<WeaponRegister[]>([
@@ -106,6 +106,18 @@ const NovoRegistro = () => {
     reset();
     resetUsedWeapons();
     setStep(0);
+    findUser.reset();
+  }
+
+  function handlePrevStep() {
+    if (step == 1) {
+      setStep(1);
+    } else {
+      if (step == 3) {
+        createRegister.reset();
+      }
+      setStep((prev) => prev - 1);
+    }
   }
 
   return (
@@ -118,6 +130,15 @@ const NovoRegistro = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col w-4/5 bg-violet-50 p-3 rounded m-2 gap-2"
       >
+        <button
+          type="button"
+          onClick={handlePrevStep}
+          className={`${
+            step <= 1 && "hidden"
+          } flex items-center gap-2 text-md hover:bg-neutral-800 transition ease-linear duration-100 p-2 bg-black rounded text-white w-fit`}
+        >
+          <FaArrowLeft /> Voltar
+        </button>
         {findUser.data && (
           <div className="flex flex-col gap-1">
             <img
@@ -189,10 +210,10 @@ const NovoRegistro = () => {
             </label>
             <select
               required
+              defaultValue=""
               {...register("activity")}
               className="rounded border-2 border-gray-100 outline-violet-600 p-2  w-full"
             >
-              <option value="">Selecione uma opção</option>
               <option value="treinamento">Treino</option>
               <option value="prova">Prova</option>
             </select>
@@ -224,7 +245,6 @@ const NovoRegistro = () => {
               {...register("clubId")}
               className="rounded border-2 border-gray-100 outline-violet-600 p-2  w-full "
             >
-              <option value="">Selecione um Clube</option>
               {data?.map((club) => (
                 <option value={club._id} key={club._id}>
                   {club.name}
@@ -351,7 +371,7 @@ const NovoRegistro = () => {
                 ])
               }
               type="button"
-              className="flex w-full justify-center items-center gap-2 bg-gray-600 text-white px-2 py-2 rounded hover:bg-gray-500 ease-in-out duration-100"
+              className="flex w-full justify-center items-center gap-2 bg-blue-600 text-white px-2 py-2 rounded hover:bg-blue-500 ease-in-out duration-100"
             >
               <FaPlus /> Adicionar Armamento
             </button>
