@@ -158,11 +158,11 @@ const NewRegistro = ({ isOpen, handleClose }: Props) => {
                           ? {
                               ...usedW,
                               wid: weapon?._id,
-                              name: weapon?.name,
+                              name: weapon?.brand,
                               categoria: weaponCategory?.name,
-                              validade: weapon?.validade,
-                              registro: weapon?.registro,
-                              modelo: weapon?.modelo,
+                              validade: weapon?.GTValidation,
+                              registro: weapon?.register,
+                              modelo: weapon?.model,
                             }
                           : usedW
                       )
@@ -173,7 +173,7 @@ const NewRegistro = ({ isOpen, handleClose }: Props) => {
                   <option value="">Selecione um armamento</option>
                   {userWeapons.data?.map((uW) => (
                     <option value={uW._id} key={uW._id}>
-                      {uW.name} - NRº: {uW.registro}
+                      {uW.brand + " " + uW.model} - NRº: {uW.register}
                     </option>
                   ))}
                 </select>

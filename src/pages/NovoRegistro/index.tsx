@@ -302,11 +302,11 @@ const NovoRegistro = () => {
                             ? {
                                 ...usedW,
                                 wid: weapon?._id,
-                                name: weapon?.name,
+                                name: weapon?.brand,
                                 categoria: weaponCategory?.name,
-                                validade: weapon?.validade,
-                                registro: weapon?.registro,
-                                modelo: weapon?.modelo,
+                                validade: weapon?.GTValidation,
+                                registro: weapon?.register,
+                                modelo: weapon?.model,
                               }
                             : usedW
                         )
@@ -316,7 +316,7 @@ const NovoRegistro = () => {
                     <option value="">Selecione um armamento</option>
                     {acervo?.map((uW) => (
                       <option value={uW._id} key={uW._id}>
-                        {uW.name} - NRº: {uW.registro}
+                        {uW.brand + " " + uW.model} - NRº: {uW.register}
                       </option>
                     ))}
                   </select>
