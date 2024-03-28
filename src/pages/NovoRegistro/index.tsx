@@ -200,7 +200,7 @@ const NovoRegistro = () => {
             <div className="flex gap-2">
               <button
                 type="submit"
-                className="w-full justify-center bg-orange-600 hover:bg-orange-700 text-white flex items-center gap-2 p-2 rounded group"
+                className="w-full justify-center bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2 p-2 rounded group"
               >
                 Pesquisar
                 <FaMagnifyingGlass />

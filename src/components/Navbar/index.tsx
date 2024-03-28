@@ -35,15 +35,13 @@ const Navbar = () => {
 
         <ul
           className={`absolute p-4  md:opacity-100 md:shadow-none shadow w-screen md:w-auto left-0 ${
-            mobileIsOpen
-              ? "top-14 opacity-100 bg-orange-600"
-              : "top-[-400px] opacity-0 z-[-999]"
+            mobileIsOpen ? "top-14 bg-orange-600" : "top-[-400px] z-[-999]"
           } md:top-0 md:relative flex md:flex-row flex-col gap-3 md:items-center tracking-wider ease-out transition-all duration-700`}
         >
           <li>
             <Link
               to="/registros"
-              onClick={() => setMobileIsOpen((prev) => !prev)}
+              onClick={() => setMobileIsOpen(false)}
               className={`relative ${
                 pathname === "/registros" ? "text-white" : "text-neutral-800"
               } flex gap-2 items-center "text-white"
@@ -57,7 +55,7 @@ const Navbar = () => {
             <Link
               to="/novoRegistro"
               onClick={() => {
-                setMobileIsOpen((prev) => !prev);
+                setMobileIsOpen(false);
               }}
               className={`relative ${
                 pathname === "/novoRegistro" ? "text-white" : "text-neutral-800"
