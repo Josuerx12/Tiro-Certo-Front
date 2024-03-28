@@ -7,10 +7,10 @@ import { useAuth } from "../../store/useAuth";
 import { UserDropdown } from "./UserDropdown";
 import { FaX } from "react-icons/fa6";
 import { FaPlus, FaRing, FaUsers } from "react-icons/fa";
-// import { GrNotes } from "react-icons/gr";
 import { BiCategory } from "react-icons/bi";
 import { Dropdown } from "../Dropdown";
 import { NewRegistro } from "../Modals/Registro/New";
+import { GrNotes } from "react-icons/gr";
 
 const Navbar = () => {
   const { pathname } = useLocation();
@@ -65,18 +65,7 @@ const Navbar = () => {
               <FaPlus /> Novo registro
             </Link>
           </li>
-          <li>
-            <Link
-              to="/"
-              onClick={() => setMobileIsOpen((prev) => !prev)}
-              className={`relative ${
-                pathname === "/" ? "text-violet-300" : "text-white"
-              } flex gap-2 items-center "text-white"
-           before:content-[''] before:absolute before:w-0 before:duration-300 before:bottom-[-4px] before:bg-fuchsia-400 before:left-0 before:h-0.5 hover:before:w-4/5`}
-            >
-              Página Inicial
-            </Link>
-          </li>
+
           {(user?.admin || user?.founder) && (
             <li>
               <Dropdown title="Administração">
@@ -86,12 +75,12 @@ const Navbar = () => {
                 >
                   <FaUsers /> Usuários
                 </Link>
-                {/* <Link
-                  to="/atividadesDoUsuarios"
+                <Link
+                  to="/atividadesDosUsuarios"
                   className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"
                 >
                   <GrNotes /> Registros de Atividades
-                </Link> */}
+                </Link>
                 <Link
                   to="/clubes"
                   className="flex items-center gap-2 cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 text-nowrap"

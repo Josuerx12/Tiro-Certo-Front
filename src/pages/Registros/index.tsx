@@ -53,12 +53,14 @@ const RegistrosPage = () => {
         )}
       </h3>
       <div className="w-4/5 flex-wrap flex justify-end gap-2">
-        <button
-          onClick={handleNewSearch}
-          className="flex flex-grow sm:flex-grow-0  justify-center items-center gap-2 bg-blue-700 text-white p-2 rounded hover:bg-blue-600 ease-linear duration-100"
-        >
-          Nova pesquisa <FaMagnifyingGlass />
-        </button>
+        {data && (
+          <button
+            onClick={handleNewSearch}
+            className="flex flex-grow sm:flex-grow-0  justify-center items-center gap-2 bg-blue-700 text-white p-2 rounded hover:bg-blue-600 ease-linear duration-100"
+          >
+            Nova pesquisa <FaMagnifyingGlass />
+          </button>
+        )}
         {data && (
           <button
             onClick={() => generateAndDownloadXLSX(data)}

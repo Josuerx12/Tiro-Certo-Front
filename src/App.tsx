@@ -11,6 +11,7 @@ import { ClubsAdminDashboard } from "./pages/Admin/Clubs";
 import { Footer } from "./components/Footer";
 import NovoRegistro from "./pages/NovoRegistro";
 import { Toaster } from "react-hot-toast";
+import ActivitiesAdminDashboard from "./pages/Admin/Activities";
 
 const App = () => {
   const { user, getUser } = useAuth();
@@ -24,6 +25,16 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Navigate to="/novoRegistro" />} />
+        <Route
+          path="/atividadesDosUsuarios"
+          element={
+            user?.admin || user?.founder ? (
+              <ActivitiesAdminDashboard />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
         <Route
           path="/auth"
           element={user ? <Navigate to="/registros" /> : <Auth />}
