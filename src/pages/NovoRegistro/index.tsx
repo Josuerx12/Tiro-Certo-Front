@@ -153,7 +153,7 @@ const NovoRegistro = () => {
           onClick={handleCancel}
           className={`${
             step < 1 && "hidden"
-          } flex items-center gap-2 text-md hover:bg-red-800 transition ease-linear duration-100 p-2 bg-red-600 rounded text-white w-fit`}
+          } flex items-center gap-2 text-md hover:bg-neutral-800 transition ease-linear duration-100 p-2 bg-neutral-700 rounded text-white w-fit`}
         >
           <FaX /> Cancelar
         </button>
