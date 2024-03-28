@@ -70,11 +70,11 @@ const UserDropdown = ({ isOpen, handleClose, user }: Props) => {
             !isOpen && "hidden"
           } flex flex-col gap-3 md:bg-gray-50 md:text-black w-fit rounded-lg p-2 md:right-0 md:mt-2 shadow`}
         >
-          <h4 className="flex gap-2 items-center justify-center  text-nowrap font-bold md:text-violet-950 md:pl-2">
+          <h4 className="flex gap-2 items-center justify-center  text-nowrap font-bold md:text-orange-950 md:pl-2">
             Opções do Usuário <FaUser />
           </h4>
           <li
-            className="cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 "
+            className="cursor-pointer hover:bg-orange-400 hover:text-white rounded md:pl-2 "
             onClick={() => {
               setUserModalIsOpen((prev) => !prev);
             }}
@@ -86,24 +86,24 @@ const UserDropdown = ({ isOpen, handleClose, user }: Props) => {
               setUserModalIsOpen(false);
               navigate("/registros");
             }}
-            className="cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2 "
+            className="cursor-pointer hover:bg-orange-400 hover:text-white rounded md:pl-2 "
           >
-            <Link to="/registros" className="w-full">
+            <Link to="/meusRegistros" className="w-full">
               Atividades
             </Link>
           </li>
           <li
-            className="cursor-pointer hover:bg-violet-400 hover:text-white rounded md:pl-2"
+            className="cursor-pointer hover:bg-orange-400 hover:text-white rounded md:pl-2"
             onClick={() => {
               setUserModalIsOpen(false);
               navigate("/acervo");
             }}
           >
-            <Link to="/acervo">Acervo</Link>
+            <Link to="/meuAcervo">Acervo</Link>
           </li>
           <li className="border-b-2 border-gray-300"></li>
           <li
-            className="flex items-center gap-1 cursor-pointer hover:bg-violet-700 hover:text-white md:pl-2 rounded"
+            className="flex items-center gap-1 cursor-pointer hover:bg-orange-700 hover:text-white md:pl-2 rounded"
             title="Você irá se desconectar do sistema!"
             onClick={() => {
               setUserModalIsOpen(false);

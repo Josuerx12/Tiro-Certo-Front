@@ -25,9 +25,8 @@ const RegistrosPage = () => {
     error,
     reset: resetActivities,
   } = useMutation("userActivities", userRegistersById);
-
-  const { register, handleSubmit, reset } = useForm<FindUserCpf>();
   const { generateAndDownloadXLSX } = useGenerateXlsx();
+  const { register, handleSubmit, reset } = useForm<FindUserCpf>();
 
   const findUser = useMutation("findUser", getOne, {
     onSuccess: (user) => Promise.all([mutateAsync(user._id)]),
@@ -52,7 +51,7 @@ const RegistrosPage = () => {
           <>Atividades registradas ({findUser.data.name})</>
         )}
       </h3>
-      <div className="w-4/5 flex-wrap flex justify-end gap-2">
+      <div className="w-11/12 sm:w-4/5 flex-wrap flex justify-end gap-2">
         {data && (
           <button
             onClick={handleNewSearch}
@@ -71,26 +70,27 @@ const RegistrosPage = () => {
         )}
         <Link
           to="/novoRegistro"
-          className="flex flex-grow justify-center sm:flex-grow-0 items-center gap-2 bg-violet-700 text-white p-2 rounded hover:bg-violet-600 ease-linear duration-100"
+          className="flex flex-grow justify-center sm:flex-grow-0 items-center gap-2 bg-orange-600 text-white p-2 rounded hover:bg-orange-700 ease-linear duration-100"
         >
           <FaUserPlus /> Novo Registro
         </Link>
       </div>
 
       {!findUser.data && (
-        <form className="w-4/5" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="w-11/12 sm:w-4/5 bg-neutral-800 text-white p-2 rounded"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="flex flex-col gap-3">
-            <label className="font-semibold text-md text-neutral-700">
-              CPF:
-            </label>
+            <label className="font-semibold text-md ">CPF:</label>
 
             <input
               type="text"
               {...register("cpf")}
               required
-              placeholder="000.000.000-00 ou 00000000000"
+              placeholder="Insira seu cpf sem pontuação!"
               title="Insira seu cpf"
-              className="rounded border-2 border-gray-100 outline-violet-600 p-2 w-full"
+              className="rounded border-2 border-gray-100 text-neutral-950 outline-orange-600 p-2 w-full"
             />
             {findUser.isError && (
               <ErrorComponent>{findUser.error as string}</ErrorComponent>
@@ -99,7 +99,7 @@ const RegistrosPage = () => {
             <div className="flex gap-2">
               <button
                 type="submit"
-                className="w-full justify-center bg-violet-800 hover:bg-violet-700 text-white flex items-center gap-2 p-2 rounded group"
+                className="w-full justify-center bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2 p-2 rounded group"
               >
                 Pesquisar
                 <FaMagnifyingGlass />
@@ -109,13 +109,19 @@ const RegistrosPage = () => {
         </form>
       )}
 
-      <div className="bg-neutral-50 border-indigo-200 border shadow w-11/12 sm:w-4/5 h-[70dvh] mb-3 mx-2 rounded p-6 flex flex-col gap-6 overflow-auto">
+      <div className="bg-neutral-100 border-2 border-neutral-500 w-11/12 sm:w-4/5 h-[70dvh] mb-3 mx-2 rounded p-6 flex flex-col gap-6 overflow-auto">
         {isLoading ? (
           Array.from(Array(10)).map((_, i) => <SkeletonCard key={i} />)
         ) : data ? (
-          data.map((register) => (
-            <RegisterCard key={register._id} register={register} />
-          ))
+          data && data.length > 0 ? (
+            data.map((register) => (
+              <RegisterCard key={register._id} register={register} />
+            ))
+          ) : (
+            <p className="text-center">
+              Nenhuma atividade encontrada para seu usuário!
+            </p>
+          )
         ) : (
           <p className="text-center">
             {error

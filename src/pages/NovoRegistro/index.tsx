@@ -57,7 +57,7 @@ const NovoRegistro = () => {
         setStep(1),
         setValue("userId", data._id),
         getUserAcervo.mutateAsync(data._id),
-        toast.success(`Usuário ${data.name}, encontrado!`),
+        toast.success(`Usuário ${data.name}, identificado!`),
       ]),
     onError: (err: string) => {
       toast.error(err);
@@ -69,7 +69,9 @@ const NovoRegistro = () => {
   const createRegister = useMutation("createRegister", create, {
     onSuccess: () =>
       Promise.all([
-        toast.success("Registro de atividade criado com sucesso!"),
+        toast.success("Registro de atividade criado com sucesso!", {
+          duration: 5000,
+        }),
         handleCancel(),
       ]),
     onError: (e: string) => {
@@ -146,14 +148,14 @@ const NovoRegistro = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-4/5 bg-violet-50 p-3 rounded m-2 gap-2"
+        className="flex flex-col w-11/12 sm:w-4/5 text-white bg-neutral-800 p-3 rounded m-2 gap-2"
       >
         <button
           type="button"
           onClick={handleCancel}
           className={`${
             step < 1 && "hidden"
-          } flex items-center gap-2 text-md hover:bg-neutral-800 transition ease-linear duration-100 p-2 bg-neutral-700 rounded text-white w-fit`}
+          } flex items-center gap-2 text-md hover:bg-orange-700 transition ease-linear text-white duration-100 p-2 bg-orange-600 rounded w-fit`}
         >
           <FaX /> Cancelar
         </button>
@@ -161,7 +163,7 @@ const NovoRegistro = () => {
           <div className="flex flex-col gap-3 justify-center items-center">
             {findUser.data.photoURL && (
               <img
-                className="w-52 h-52 rounded-full shadow border border-white"
+                className="w-52 h-52 rounded-full shadow border-2 border-white"
                 src={findUser.data.photoURL}
                 alt={findUser.data.name}
               />
@@ -181,9 +183,7 @@ const NovoRegistro = () => {
         )}
         {step === 0 && (
           <div className="flex flex-col gap-3">
-            <label className="font-semibold text-md text-neutral-700">
-              CPF:
-            </label>
+            <label className="font-semibold text-md">CPF:</label>
 
             <input
               type="text"
@@ -191,7 +191,7 @@ const NovoRegistro = () => {
               required
               placeholder="Insira seu cpf sem pontução!"
               title="Insira seu cpf"
-              className="rounded border-2 border-gray-100 outline-violet-600 p-2 w-full"
+              className="rounded border-2 text-black border-gray-100 outline-orange-600 p-2 w-full"
             />
             {findUser.isError && (
               <ErrorComponent>{findUser.error as string}</ErrorComponent>
@@ -200,7 +200,7 @@ const NovoRegistro = () => {
             <div className="flex gap-2">
               <button
                 type="submit"
-                className="w-full justify-center bg-violet-800 hover:bg-violet-700 text-white flex items-center gap-2 p-2 rounded group"
+                className="w-full justify-center bg-orange-600 hover:bg-orange-700 text-white flex items-center gap-2 p-2 rounded group"
               >
                 Pesquisar
                 <FaMagnifyingGlass />
@@ -211,14 +211,14 @@ const NovoRegistro = () => {
 
         {step === 1 && (
           <div className="flex flex-col gap-2 items-center flex-grow">
-            <label className="font-semibold text-md text-neutral-700 text-nowrap">
+            <label className="font-semibold text-md  text-nowrap">
               Atividade executada:
             </label>
             <select
               required
               defaultValue=""
               {...register("activity")}
-              className="rounded border-2 border-gray-100 outline-violet-600 p-2  w-full"
+              className="rounded border-2 text-black border-gray-100 outline-orange-600 p-2  w-full"
             >
               <option value="treinamento">Treino</option>
               <option value="prova">Prova</option>
@@ -227,7 +227,7 @@ const NovoRegistro = () => {
               <button
                 type="submit"
                 onClick={() => setStep(2)}
-                className="w-full justify-center bg-violet-800 hover:bg-violet-700 text-white flex items-center gap-2 p-2 rounded group"
+                className="w-full justify-center bg-orange-600 hover:bg-orange-700 text-white flex items-center gap-2 p-2 rounded group"
               >
                 Proximo
                 <FaArrowRight className="animate-pulse duration-800 group-hover:animate-none" />
@@ -243,7 +243,7 @@ const NovoRegistro = () => {
               required
               defaultValue=""
               {...register("clubId")}
-              className="rounded border-2 border-gray-100 outline-violet-600 p-2  w-full "
+              className="rounded border-2 border-gray-100 text-black outline-orange-600 p-2  w-full "
             >
               {data?.map((club) => (
                 <option value={club._id} key={club._id}>
@@ -263,7 +263,7 @@ const NovoRegistro = () => {
               <button
                 type="submit"
                 onClick={() => setStep(3)}
-                className="w-full justify-center bg-violet-800 hover:bg-violet-700 text-white flex items-center gap-2 p-2 rounded group"
+                className="w-full justify-center bg-orange-600 hover:bg-orange-700 text-white flex items-center gap-2 p-2 rounded group"
               >
                 Proximo
                 <FaArrowRight className="animate-pulse duration-800 group-hover:animate-none" />
@@ -275,12 +275,12 @@ const NovoRegistro = () => {
           <div className="flex flex-col gap-2 flex-grow">
             {usedWeapons?.map((w) => (
               <div className="flex gap-3 flex-wrap" key={w.id}>
-                <div className="flex flex-col gap-2 w-fit basis-40 flex-grow ">
+                <div className="flex flex-col gap-2 w-fit basis-56 flex-grow ">
                   <label className="flex gap-2 items-center">
                     Arma Utilizada <FaPersonRifle />
                   </label>
                   <select
-                    className="w-full rounded border-2 border-gray-100 outline-violet-600 p-2"
+                    className="w-full rounded border-2 text-black border-gray-100 outline-orange-600 p-2"
                     required
                     onChange={async (e) => {
                       const weapon = acervo?.find(
@@ -321,12 +321,12 @@ const NovoRegistro = () => {
                     ))}
                   </select>
                 </div>
-                <div className="flex flex-col gap-2 w-fit basis-48 flex-grow sm:flex-grow-0">
+                <div className="flex flex-col gap-2 w-fit basis-56 flex-grow sm:flex-grow-0">
                   <label>Disparos</label>
                   <input
                     type="number"
                     required
-                    className="rounded border-2 w-full border-gray-100 outline-violet-600 p-2"
+                    className="rounded border-2 text-black w-full border-gray-100 outline-orange-600 p-2"
                     onChange={(e) =>
                       setUsedWeapons((prev) =>
                         prev.map((usedW) =>
@@ -338,7 +338,7 @@ const NovoRegistro = () => {
                     }
                   />
                 </div>
-                <div className="flex-grow sm:flex-grow-0 flex flex-col gap-2 items-center md:justify-end">
+                <div className="flex-grow sm:flex-grow-0 flex flex-col basis-56 gap-2 items-center md:justify-end">
                   <button
                     className="w-full gap-2 bg-red-600 text-white p-2 rounded flex items-center justify-center"
                     title="remover esse campo!"

@@ -1,4 +1,4 @@
-import { FaGun, FaPersonRifle } from "react-icons/fa6";
+import { FaPersonRifle } from "react-icons/fa6";
 import { useAcervo } from "../../hooks/useAcervo";
 import { useQuery, useQueryClient } from "react-query";
 import { IWeapon } from "../../interfaces/IWeapon";
@@ -26,12 +26,12 @@ const AcervoPage = () => {
       </h3>
       <div className="w-4/5 flex justify-end my-2 gap-2">
         <RefreshButton command={() => query.resetQueries("acervo")} />{" "}
-        <button
+        {/* <button
           onClick={() => setIsOpen((prev) => !prev)}
           className="flex items-center gap-2 bg-violet-700 text-white p-2 rounded-md hover:bg-violet-600 ease-linear duration-100"
         >
           <FaGun /> Nova arma
-        </button>
+        </button> */}
       </div>
       <div className="flex flex-col w-4/5 gap-3">
         {isLoading ? (

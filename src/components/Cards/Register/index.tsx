@@ -5,9 +5,9 @@ import { format } from "date-fns";
 
 const RegisterCard = ({ register }: { register: IRegister }) => {
   return (
-    <div className="border p-2 shadow bg-neutral-50  border-violet-600 w-full min-h-48 rounded flex flex-wrap justify-between overflow-auto">
+    <div className="border-2 p-2 shadow bg-neutral-800 text-neutral-200  border-white w-full min-h-48 rounded flex flex-wrap justify-between overflow-auto">
       <div className="flex flex-col ">
-        <h4 className="font-bold flex gap-2 items-center text-violet-900">
+        <h4 className="font-bold flex gap-2 items-center text-orange-600">
           <FaDatabase /> Dados:
         </h4>
         <p>
@@ -33,13 +33,13 @@ const RegisterCard = ({ register }: { register: IRegister }) => {
       </div>
 
       <div className="flex flex-col">
-        <h3 className="font-bold flex gap-2 items-center text-violet-900">
+        <h3 className="font-bold flex gap-2 items-center text-orange-600">
           <FaGun /> Armas Utilizadas:
         </h3>
 
         <div className="flex flex-col gap-3">
           {register.weapons.map((weapon, i) => (
-            <div className="bg-orange-300 rounded p-2" key={i}>
+            <div className="bg-orange-400 rounded p-2 text-neutral-900" key={i}>
               <p>
                 <span className="font-bold">Nome:</span> {weapon.name}
               </p>

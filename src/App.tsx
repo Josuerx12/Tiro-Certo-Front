@@ -5,13 +5,13 @@ import { useEffect } from "react";
 import { RegistrosPage } from "./pages/Registros";
 import { Auth } from "./pages/Auth";
 import { WeaponCategory } from "./pages/Admin/WeaponCategory";
-import { AcervoPage } from "./pages/Acervo";
 import { UsersAdminDashboard } from "./pages/Admin/Users";
 import { ClubsAdminDashboard } from "./pages/Admin/Clubs";
 import { Footer } from "./components/Footer";
 import NovoRegistro from "./pages/NovoRegistro";
 import { Toaster } from "react-hot-toast";
 import ActivitiesAdminDashboard from "./pages/Admin/Activities";
+import WeaponsDashboard from "./pages/Admin/Weapons";
 
 const App = () => {
   const { user, getUser } = useAuth();
@@ -52,8 +52,14 @@ const App = () => {
           }
         />
         <Route
-          path="/acervo"
-          element={user ? <AcervoPage /> : <Navigate to="/auth" />}
+          path="/acervos"
+          element={
+            user?.admin || user?.founder ? (
+              <WeaponsDashboard />
+            ) : (
+              <Navigate to="/auth" />
+            )
+          }
         />
         <Route
           path="/usuarios"

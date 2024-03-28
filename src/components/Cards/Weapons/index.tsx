@@ -16,33 +16,37 @@ const WeaponsCard = ({ weapon }: { weapon: IWeapon }) => {
   );
 
   return (
-    <div className="relative group flex gap-2 bg-slate-50 flex-1 p-2 rounded-lg sm:justify-between flex-wrap items-center justify-center border-b-4 border-b-violet-900 before:opacity-0 before:content-['Vizualizar_Detalhes'] before:absolute before:bottom-0 before:right-0 before:text-violet-900 before:font-bold before:w-full before:h-6 before:flex before:justify-center hover:before:opacity-100 before:ease-in-out before:duration-300 cursor-pointer">
+    <div className="relative group p-2 flex gap-2 bg-slate-50 flex-1 rounded-lg sm:justify-between flex-wrap items-center justify-center border-b-4 border-b-orange-900 before:opacity-0 before:content-['Vizualizar_Detalhes'] before:absolute before:bottom-0 before:right-0 before:text-orange-900 before:font-bold before:w-full before:h-6 before:flex before:justify-center hover:before:opacity-100 before:ease-in-out before:duration-300 cursor-pointer">
       <img
         className="w-36 h-36"
         src={weaponCategory?.logoURL ? weaponCategory.logoURL : "/noImage.jpg"}
         alt={weaponCategory?.name}
       />
 
-      <div className="flex flex-col basis-96">
+      <div className="flex flex-col basis-96 bg-neutral-300 p-2 rounded">
         <h4 className="flex items-center gap-1 text-lg">
           Dados do armamento <FaGun />
         </h4>
 
         <p>
-          <span className="font-bold"> Nome: </span>
-          {weapon.name}
+          <span className="font-bold"> Marca: </span>
+          {weapon.brand}
         </p>
         <p>
-          <span className="font-bold">Modelo: </span> {weapon.modelo}
+          <span className="font-bold">Modelo: </span> {weapon.model}
         </p>
         <p>
           <span className="font-bold">Categoria: </span> {weaponCategory?.name}
         </p>
         <p>
           <span className="font-bold">Validade:</span>
-          {format(new Date(weapon.validade + "T00:00:00-03:00"), "dd/MM/yyyy", {
-            locale: ptBR,
-          })}
+          {format(
+            new Date(weapon.GTValidation + "T00:00:00-03:00"),
+            "dd/MM/yyyy",
+            {
+              locale: ptBR,
+            }
+          )}
         </p>
       </div>
     </div>

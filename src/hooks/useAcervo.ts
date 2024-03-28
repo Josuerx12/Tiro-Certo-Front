@@ -15,6 +15,15 @@ function useAcervo() {
     }
   }
 
+  async function getAll(): Promise<IWeapon[]> {
+    try {
+      const payload = (await api(token).get("/acervo/all")).data.payload;
+      return payload;
+    } catch (error: any) {
+      throw error;
+    }
+  }
+
   async function getById(id: string): Promise<IWeapon[]> {
     try {
       const payload = (await api().get("/acervo/" + id)).data.payload;
@@ -23,7 +32,7 @@ function useAcervo() {
       throw error;
     }
   }
-  return { get, getById };
+  return { get, getById, getAll };
 }
 
 export { useAcervo };

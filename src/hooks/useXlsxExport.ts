@@ -1,6 +1,7 @@
 import * as XLSX from "xlsx";
 import { IRegister } from "../interfaces/IRegister";
 import { format } from "date-fns";
+import toast from "react-hot-toast";
 
 export const useGenerateXlsx = () => {
   const generateAndDownloadXLSX = (registers: IRegister[]) => {
@@ -65,8 +66,11 @@ export const useGenerateXlsx = () => {
 
       document.body.removeChild(a);
       URL.revokeObjectURL(blob);
+      toast.success(
+        "Download em execução verifique sua área de transferencias!"
+      );
     } else {
-      return alert(
+      toast.error(
         "Não foi possivel gerar a lista de registros por falta de dados."
       );
     }

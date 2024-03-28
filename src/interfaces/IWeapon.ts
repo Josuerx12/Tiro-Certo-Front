@@ -1,9 +1,9 @@
 export interface IWeapon {
   _id: string;
-  name: string;
+  brand: string;
   ownerId: string;
   categoryId: string;
-  modelo: string;
-  registro: string;
-  validade: string;
+  model: string;
+  register: string;
+  GTValidation: string;
 }

@@ -9,6 +9,8 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useWeapons } from "../../../../hooks/useWeapons";
 import toast from "react-hot-toast";
+import { IUser } from "../../../../interfaces/IUser";
+import { useUsers } from "../../../../hooks/useUsers";
 
 type Props = {
   isOpen: boolean;
@@ -17,6 +19,7 @@ type Props = {
 
 const CreateWeaponModal = ({ isOpen, handleClose }: Props) => {
   const { reset, register, handleSubmit, setValue } = useForm();
+  const { getAll } = useUsers();
   const { create } = useWeapons();
   const query = useQueryClient();
   const mutation = useMutation("newWeapon", create, {
@@ -35,6 +38,7 @@ const CreateWeaponModal = ({ isOpen, handleClose }: Props) => {
   const { Fetch } = useWeaponCategory();
 
   const { data, isLoading } = useQuery<ICategories[]>("categories", Fetch);
+  const users = useQuery<IUser[]>("users", getAll);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -45,7 +49,10 @@ const CreateWeaponModal = ({ isOpen, handleClose }: Props) => {
   return (
     <Modal
       show={isOpen}
-      hidden={handleClose}
+      hidden={() => {
+        handleClose();
+        reset();
+      }}
       title="Adicionar novo armamento: "
     >
       <form
@@ -53,13 +60,56 @@ const CreateWeaponModal = ({ isOpen, handleClose }: Props) => {
         ref={formRef}
         className="w-full flex flex-col gap-3"
       >
+        <div className="flex flex-col gap-2 flex-grow">
+          <label className="text-nowrap">Dono do armamento:</label>
+          <Select
+            options={users.data?.map((u) => ({
+              value: u._id,
+              label: u.name,
+              image: u.photoURL ? u.photoURL : "/noImage.jpg",
+            }))}
+            required
+            isDisabled={isLoading}
+            placeholder="Selecione um usuário!"
+            formatOptionLabel={({ label, image }) => (
+              <div className="flex items-center gap-3">
+                {image && (
+                  <img src={image} alt={label} className="w-14 h-14 rounded" />
+                )}
+                {label}
+              </div>
+            )}
+            onChange={(e) => setValue("ownerId", e?.value)}
+          />
+        </div>
+
         <div className="flex flex-col gap-1">
-          <label className="text-nowrap">Nome da Arma: </label>
+          <label className="text-nowrap">Marca: </label>
           <input
-            {...register("name")}
+            {...register("brand")}
             type="text"
-            placeholder="Ex. Glock-18"
-            className="rounded border-2 border-gray-100 outline-violet-600 flex-1 p-1"
+            required
+            placeholder="Ex. Taurus"
+            className="rounded border-2 border-gray-100 outline-orange-600 flex-1 p-1"
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label className="text-nowrap">Modelo da Arma: </label>
+          <input
+            required
+            {...register("model")}
+            placeholder="Ex. G2C"
+            className="rounded border-2 border-gray-100 outline-orange-600 flex-1 p-1"
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <label className="text-nowrap">Calibre da Arma: </label>
+          <input
+            {...register("caliber")}
+            type="text"
+            required
+            placeholder="Ex. 9mm"
+            className="rounded border-2 border-gray-100 outline-orange-600 flex-1 p-1"
           />
         </div>
         <div className="flex flex-col gap-2 flex-grow">
@@ -82,30 +132,24 @@ const CreateWeaponModal = ({ isOpen, handleClose }: Props) => {
             onChange={(e) => setValue("categoryId", e?.value)}
           />
         </div>
-        <div className="flex flex-col gap-1">
-          <label className="text-nowrap">Modelo da Arma: </label>
-          <input
-            {...register("modelo")}
-            type="text"
-            placeholder="Ex. Pistola pente estendido"
-            className="rounded border-2 border-gray-100 outline-violet-600 flex-1 p-1"
-          />
-        </div>
+
         <div className="flex flex-col gap-1">
           <label className="text-nowrap">Registro da Arma: </label>
           <input
-            {...register("registro")}
+            {...register("register")}
+            required
             type="text"
             placeholder="Nº Registro da arma"
-            className="rounded border-2 border-gray-100 outline-violet-600 flex-1 p-1"
+            className="rounded border-2 border-gray-100 outline-orange-600 flex-1 p-1"
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-nowrap">Validade do Registro: </label>
+          <label className="text-nowrap">Validade da Guia de Transito: </label>
           <input
-            {...register("validade")}
+            {...register("GTValidation")}
             type="date"
-            className="rounded border-2 border-gray-100 outline-violet-600 flex-1 p-1"
+            required
+            className="rounded border-2 border-gray-100 outline-orange-600 flex-1 p-1"
           />
         </div>
       </form>
