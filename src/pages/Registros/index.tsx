@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useRegister } from "../../hooks/useRegister";
 import { SkeletonCard } from "../../components/Cards/Skeleton";
 import { RegisterCard } from "../../components/Cards/Register";
+import { useGenerateXlsx } from "../../hooks/useXlsxExport";
 
 type FindUserCpf = {
   cpf: string;
@@ -26,6 +27,8 @@ const RegistrosPage = () => {
   } = useMutation("userActivities", userRegistersById);
 
   const { register, handleSubmit, reset } = useForm<FindUserCpf>();
+  const { generateAndDownloadXLSX } = useGenerateXlsx();
+
   const findUser = useMutation("findUser", getOne, {
     onSuccess: (user) => Promise.all([mutateAsync(user._id)]),
   });
@@ -56,9 +59,14 @@ const RegistrosPage = () => {
         >
           Nova pesquisa <FaMagnifyingGlass />
         </button>
-        <button className="flex flex-grow sm:flex-grow-0 justify-center items-center gap-2 bg-green-700 text-white p-2 rounded hover:bg-green-600 ease-linear duration-100">
-          Extrair relatorio <FaRegFileExcel />
-        </button>
+        {data && (
+          <button
+            onClick={() => generateAndDownloadXLSX(data)}
+            className="flex flex-grow sm:flex-grow-0 justify-center items-center gap-2 bg-green-700 text-white p-2 rounded hover:bg-green-600 ease-linear duration-100"
+          >
+            Extrair relatorio <FaRegFileExcel />
+          </button>
+        )}
         <Link
           to="/novoRegistro"
           className="flex flex-grow justify-center sm:flex-grow-0 items-center gap-2 bg-violet-700 text-white p-2 rounded hover:bg-violet-600 ease-linear duration-100"
