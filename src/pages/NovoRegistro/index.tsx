@@ -274,11 +274,12 @@ const NovoRegistro = () => {
           <div className="flex flex-col gap-2 flex-grow">
             {usedWeapons?.map((w) => (
               <div className="flex gap-3 flex-wrap" key={w.id}>
-                <div className="flex flex-col gap-2 flex-1">
+                <div className="flex flex-col gap-2 w-fit basis-40 flex-grow ">
                   <label className="flex gap-2 items-center">
                     Arma Utilizada <FaPersonRifle />
                   </label>
                   <select
+                    className="w-full rounded border-2 border-gray-100 outline-violet-600 p-2"
                     required
                     onChange={async (e) => {
                       const weapon = acervo?.find(
@@ -310,7 +311,6 @@ const NovoRegistro = () => {
                         )
                       );
                     }}
-                    className="rounded border-2 border-gray-100 outline-violet-600 p-2"
                   >
                     <option value="">Selecione um armamento</option>
                     {acervo?.map((uW) => (
@@ -320,12 +320,12 @@ const NovoRegistro = () => {
                     ))}
                   </select>
                 </div>
-                <div className="flex flex-col gap-2 w-fit basis-40 flex-grow sm:flex-grow-0">
+                <div className="flex flex-col gap-2 w-fit basis-48 flex-grow sm:flex-grow-0">
                   <label>Disparos</label>
                   <input
                     type="number"
                     required
-                    className="rounded border-2 border-gray-100 outline-violet-600 p-2"
+                    className="rounded border-2 w-full border-gray-100 outline-violet-600 p-2"
                     onChange={(e) =>
                       setUsedWeapons((prev) =>
                         prev.map((usedW) =>
@@ -339,6 +339,7 @@ const NovoRegistro = () => {
                 </div>
                 <div className="flex-grow sm:flex-grow-0 flex flex-col gap-2 items-center md:justify-end">
                   <button
+                    className="w-full gap-2 bg-red-600 text-white p-2 rounded flex items-center justify-center"
                     title="remover esse campo!"
                     type="button"
                     onClick={() =>
@@ -349,7 +350,6 @@ const NovoRegistro = () => {
                         return prev.filter((puww) => puww.id !== w.id);
                       })
                     }
-                    className="w-full gap-2 bg-red-600 text-white p-2 rounded flex items-center justify-center"
                   >
                     Remover <FaTrash />
                   </button>
