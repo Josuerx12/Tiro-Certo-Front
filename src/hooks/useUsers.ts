@@ -48,7 +48,7 @@ export function useUsers() {
       throw error.response.data.error;
     }
   }
-  async function deleteOne(id: string) {
+  async function deleteOne(id: string): Promise<string> {
     try {
       const payload = (await api(token).delete("/users/" + id)).data.payload;
       return payload;
@@ -56,7 +56,7 @@ export function useUsers() {
       throw error.response.data.error;
     }
   }
-  async function register(credentials: FormData) {
+  async function register(credentials: FormData): Promise<string> {
     try {
       const payload = (await api(token).post("/auth/register", credentials))
         .data.payload;

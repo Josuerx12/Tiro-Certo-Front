@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { useClub } from "../../../../hooks/useClub";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -29,8 +30,15 @@ const CreateClubModal = ({ isOpen, handleClose }: Props) => {
   const query = useQueryClient();
 
   const { mutateAsync, isLoading } = useMutation("createClub", create, {
-    onSuccess: () =>
-      Promise.all([query.invalidateQueries("clubs"), handleClose()]),
+    onSuccess: (res) =>
+      Promise.all([
+        query.invalidateQueries("clubs"),
+        handleClose(),
+        toast.success(res),
+      ]),
+    onError: () => {
+      toast.error("Erro ao criar clube, verifique as credenciais!");
+    },
   });
 
   function getLoc() {

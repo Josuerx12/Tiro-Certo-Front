@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { v4 } from "uuid";
-import { FaArrowLeft, FaArrowRight, FaPlus, FaTrash } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaArrowRight,
+  FaCheck,
+  FaPlus,
+  FaTrash,
+} from "react-icons/fa";
 import { useMutation, useQuery } from "react-query";
 import { useClub } from "../../hooks/useClub";
 import { IClub } from "../../interfaces/IClub";
@@ -9,11 +15,12 @@ import { useForm } from "react-hook-form";
 import { useUsers } from "../../hooks/useUsers";
 import { IWeapon } from "../../interfaces/IWeapon";
 import { useAcervo } from "../../hooks/useAcervo";
-import { FaMagnifyingGlass, FaPersonRifle } from "react-icons/fa6";
+import { FaMagnifyingGlass, FaPersonRifle, FaX } from "react-icons/fa6";
 import { ICategories } from "../../interfaces/ICategories";
 import { useWeaponCategory } from "../../hooks/useWeaponCategory";
 import { useRegister } from "../../hooks/useRegister";
 import { ErrorComponent } from "../../components/ErrorComponent";
+import { toast } from "react-hot-toast";
 
 type WeaponRegister = {
   id: string;
@@ -50,13 +57,24 @@ const NovoRegistro = () => {
         setStep(1),
         setValue("userId", data._id),
         getUserAcervo.mutateAsync(data._id),
+        toast.success(`Usuário ${data.name}, encontrado!`),
       ]),
+    onError: (err: string) => {
+      toast.error(err);
+    },
   });
 
   const { create } = useRegister();
 
   const createRegister = useMutation("createRegister", create, {
-    onSuccess: () => handleCancel(),
+    onSuccess: () =>
+      Promise.all([
+        toast.success("Registro de atividade criado com sucesso!"),
+        handleCancel(),
+      ]),
+    onError: (e: string) => {
+      toast.error(e);
+    },
   });
 
   const [usedWeapons, setUsedWeapons] = useState<WeaponRegister[]>([
@@ -132,44 +150,32 @@ const NovoRegistro = () => {
       >
         <button
           type="button"
-          onClick={handlePrevStep}
+          onClick={handleCancel}
           className={`${
-            step <= 1 && "hidden"
-          } flex items-center gap-2 text-md hover:bg-neutral-800 transition ease-linear duration-100 p-2 bg-black rounded text-white w-fit`}
+            step < 1 && "hidden"
+          } flex items-center gap-2 text-md hover:bg-red-800 transition ease-linear duration-100 p-2 bg-red-600 rounded text-white w-fit`}
         >
-          <FaArrowLeft /> Voltar
+          <FaX /> Cancelar
         </button>
         {findUser.data && (
-          <div className="flex flex-col gap-1">
-            <img
-              className="w-48 h-48 rounded-full shadow m-auto"
-              src={
-                findUser.data.photoURL ? findUser.data.photoURL : "/noImage.jpg"
-              }
-            />
-            <div className="flex flex-col gap-1">
-              <label className=" text-md text-neutral-700">Nome:</label>
-
-              <input
-                type="text"
-                value={findUser.data.name}
-                required
-                disabled
-                title="Seu Nome"
-                className="rounded border-2 bg-gray-200 border-gray-100 outline-violet-600 p-1 w-full"
+          <div className="flex flex-col gap-3 justify-center items-center">
+            {findUser.data.photoURL && (
+              <img
+                className="w-52 h-52 rounded-full shadow border border-white"
+                src={findUser.data.photoURL}
+                alt={findUser.data.name}
               />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className=" text-md text-neutral-700">CPF:</label>
-
-              <input
-                type="text"
-                value={findUser.data.cpf}
-                required
-                disabled
-                title="Seu CPF"
-                className="rounded border-2 bg-gray-200 border-gray-100 outline-violet-600 p-1 w-full"
-              />
+            )}
+            <div className="flex flex-wrap">
+              <p className="text-nowrap  px-2">
+                <span className="font-bold">Nome: </span> {findUser.data.name}
+              </p>
+              <p className="text-nowrap px-2">
+                <span className="font-bold">CPF: </span> {findUser.data.cpf}
+              </p>
+              <p className="text-nowrap px-2">
+                <span className="font-bold">CR: </span> {findUser.data.cr}
+              </p>
             </div>
           </div>
         )}
@@ -183,7 +189,7 @@ const NovoRegistro = () => {
               type="text"
               {...register("cpf")}
               required
-              placeholder="000.000.000-00 ou 00000000000"
+              placeholder="Insira seu cpf sem pontução!"
               title="Insira seu cpf"
               className="rounded border-2 border-gray-100 outline-violet-600 p-2 w-full"
             />
@@ -217,13 +223,7 @@ const NovoRegistro = () => {
               <option value="treinamento">Treino</option>
               <option value="prova">Prova</option>
             </select>
-            <div className="flex gap-2">
-              <button
-                onClick={() => handleCancel()}
-                className="w-full justify-center bg-neutral-600 transition ease-linear duration-300 hover:bg-neutral-500 text-white flex items-center gap-2 p-2 rounded"
-              >
-                Cancelar
-              </button>
+            <div className="flex gap-2 w-full">
               <button
                 type="submit"
                 onClick={() => setStep(2)}
@@ -253,10 +253,11 @@ const NovoRegistro = () => {
             </select>
             <div className="flex gap-2">
               <button
-                onClick={() => handleCancel()}
-                className="w-full justify-center bg-neutral-600 transition ease-linear duration-300 hover:bg-neutral-500 text-white flex items-center gap-2 p-2 rounded"
+                onClick={handlePrevStep}
+                className="w-full justify-center bg-neutral-600 transition group ease-linear duration-300 hover:bg-neutral-500 text-white flex items-center gap-2 p-2 rounded"
               >
-                Cancelar
+                <FaArrowLeft className="animate-pulse duration-800 group-hover:animate-none" />{" "}
+                Voltar
               </button>
               <button
                 type="submit"
@@ -382,17 +383,18 @@ const NovoRegistro = () => {
 
             <div className="flex gap-2">
               <button
-                onClick={() => handleCancel()}
-                className="w-full justify-center bg-neutral-600 transition ease-linear duration-300 hover:bg-neutral-500 text-white flex items-center gap-2 p-2 rounded"
+                onClick={handlePrevStep}
+                className="w-full justify-center bg-neutral-600 transition group ease-linear duration-300 hover:bg-neutral-500 text-white flex items-center gap-2 p-2 rounded"
               >
-                Cancelar
+                <FaArrowLeft className="animate-pulse duration-800 group-hover:animate-none" />{" "}
+                Voltar
               </button>
               <button
                 type="submit"
-                className="w-full justify-center bg-violet-800 hover:bg-violet-700 text-white flex items-center gap-2 p-2 rounded group"
+                className="w-full justify-center bg-green-800 hover:bg-green-700 text-white flex items-center gap-2 p-2 rounded group"
               >
-                Proximo
-                <FaArrowRight className="animate-pulse duration-800 group-hover:animate-none" />
+                Gerar registro
+                <FaCheck className="animate-pulse duration-800 group-hover:animate-none" />
               </button>
             </div>
           </div>

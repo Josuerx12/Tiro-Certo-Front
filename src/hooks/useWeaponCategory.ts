@@ -15,7 +15,7 @@ export function useWeaponCategory() {
       throw error;
     }
   }
-  async function Create(credentials: FormData) {
+  async function Create(credentials: FormData): Promise<string> {
     try {
       const payload = (
         await api(token).post("/weaponsCategories/", credentials)
@@ -27,7 +27,7 @@ export function useWeaponCategory() {
     }
   }
 
-  async function Delete(id: string) {
+  async function Delete(id: string): Promise<string> {
     try {
       const payload = (await api(token).delete(`/weaponsCategories/${id}`)).data
         .payload;
@@ -43,7 +43,7 @@ export function useWeaponCategory() {
   }: {
     id: string;
     credentials: FormData;
-  }) {
+  }): Promise<string> {
     try {
       const payload = (
         await api(token).put(`/weaponsCategories/${id}`, credentials)

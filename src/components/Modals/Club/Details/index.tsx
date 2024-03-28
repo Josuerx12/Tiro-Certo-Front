@@ -8,6 +8,7 @@ import { useClub } from "../../../../hooks/useClub";
 import { useMutation, useQueryClient } from "react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import DeleteClubModal from "../Delete";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -41,12 +42,13 @@ const ClubDetailModal = ({ isOpen, handleClose, club }: Props) => {
   const credentials = new FormData();
 
   const { isLoading, mutateAsync } = useMutation("editClub", edit, {
-    onSuccess: () =>
+    onSuccess: (res) =>
       Promise.all([
         reset(),
         handleClose(),
         query.invalidateQueries("clubs"),
         setIsEditing(false),
+        toast.success(res),
       ]),
   });
 

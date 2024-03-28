@@ -8,6 +8,7 @@ import { useWeaponCategory } from "../../../../hooks/useWeaponCategory";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaPen, FaTrash } from "react-icons/fa";
 import { DeleteWeaponCategoryModal } from "../delete";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -28,12 +29,16 @@ const WeaponCategoryDetailModal = ({
   const { EditFC } = useWeaponCategory();
 
   const { mutateAsync, isLoading } = useMutation("editCategory", EditFC, {
-    onSuccess: () =>
+    onSuccess: (res) =>
       Promise.all([
         reset(),
         handleClose(),
         query.invalidateQueries("categories"),
+        toast.success(res),
       ]),
+    onError: () => {
+      toast.error("Erro ao editar categoria!");
+    },
   });
 
   const { handleSubmit, reset, register } = useForm();

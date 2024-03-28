@@ -5,6 +5,7 @@ import { useWeaponCategory } from "../../../../hooks/useWeaponCategory";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -26,12 +27,16 @@ const NewWeaponCategoryModal = ({ isOpen, handleClose }: Props) => {
   const query = useQueryClient();
 
   const { mutateAsync, isLoading } = useMutation("createCategory", Create, {
-    onSuccess: () =>
+    onSuccess: (res) =>
       Promise.all([
         query.invalidateQueries("categories"),
         handleClose(),
         reset(),
+        toast.success(res),
       ]),
+    onError: () => {
+      toast.error("Erro ao ceriar nova categoria!");
+    },
   });
 
   const onSubmit = async (data: any) => {

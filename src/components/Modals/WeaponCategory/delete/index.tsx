@@ -4,6 +4,7 @@ import { BsExclamationCircle } from "react-icons/bs";
 import { useMutation, useQueryClient } from "react-query";
 import { useWeaponCategory } from "../../../../hooks/useWeaponCategory";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -19,8 +20,15 @@ const DeleteWeaponCategoryModal = ({
   const { Delete } = useWeaponCategory();
   const query = useQueryClient();
   const { mutateAsync, isLoading } = useMutation("deleteCategory", Delete, {
-    onSuccess: () =>
-      Promise.all([handleClose(), query.invalidateQueries("categories")]),
+    onSuccess: (res) =>
+      Promise.all([
+        handleClose(),
+        query.invalidateQueries("categories"),
+        toast.success(res),
+      ]),
+    onError: () => {
+      toast.error("Erro ao deletar categoria de arma!");
+    },
   });
 
   return (

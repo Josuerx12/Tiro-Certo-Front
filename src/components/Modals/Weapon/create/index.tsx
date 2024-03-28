@@ -8,6 +8,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useWeapons } from "../../../../hooks/useWeapons";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -19,8 +20,16 @@ const CreateWeaponModal = ({ isOpen, handleClose }: Props) => {
   const { create } = useWeapons();
   const query = useQueryClient();
   const mutation = useMutation("newWeapon", create, {
-    onSuccess: () =>
-      Promise.all([query.invalidateQueries("acervo"), reset(), handleClose()]),
+    onSuccess: (res) =>
+      Promise.all([
+        query.invalidateQueries("acervo"),
+        reset(),
+        handleClose(),
+        toast.success(res),
+      ]),
+    onError: () => {
+      toast.error("Erro ao adicionar nova arma, verifique as credenciais!");
+    },
   });
 
   const { Fetch } = useWeaponCategory();

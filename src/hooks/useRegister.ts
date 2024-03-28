@@ -8,7 +8,7 @@ import { NewRegisterCredentials } from "../components/Modals/Registro/New";
 function useRegister() {
   const token = Cookies.get("refreshToken");
 
-  async function create(credentials: NewRegisterCredentials) {
+  async function create(credentials: NewRegisterCredentials): Promise<string> {
     try {
       const payload = (
         await api(token).post("/activityRegisters/", credentials)

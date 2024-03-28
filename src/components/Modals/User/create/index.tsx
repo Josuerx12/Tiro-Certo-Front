@@ -2,10 +2,11 @@
 import { useRef } from "react";
 import { Modal } from "../../Modal";
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useAuth } from "../../../../store/useAuth";
 import { useUsers } from "../../../../hooks/useUsers";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -18,8 +19,17 @@ const CreateUserModal = ({ isOpen, handleClose }: Props) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const credentials = new FormData();
+  const query = useQueryClient();
 
-  const { mutateAsync, isLoading } = useMutation("newUser", userRegister);
+  const { mutateAsync, isLoading } = useMutation("newUser", userRegister, {
+    onSuccess: (res) =>
+      Promise.all([
+        toast.success(res),
+        query.invalidateQueries("users"),
+        handleClose,
+        reset(),
+      ]),
+  });
 
   const { handleSubmit, register, reset } = useForm();
 
@@ -37,7 +47,14 @@ const CreateUserModal = ({ isOpen, handleClose }: Props) => {
   }
 
   return (
-    <Modal show={isOpen} hidden={handleClose} title="Criar novo usuário">
+    <Modal
+      show={isOpen}
+      hidden={() => {
+        handleClose();
+        reset();
+      }}
+      title="Criar novo usuário"
+    >
       <form
         ref={formRef}
         onSubmit={handleSubmit(onSubmit)}

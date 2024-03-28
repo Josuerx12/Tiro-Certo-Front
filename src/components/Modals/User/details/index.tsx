@@ -8,6 +8,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import DeleteUserModal from "../delete";
 import { Modal } from "../../Modal";
+import toast from "react-hot-toast";
 type Props = {
   isOpen: boolean;
   handleCloseModal: () => void;
@@ -39,7 +40,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
   const credentials = new FormData();
 
   const { isLoading, mutateAsync } = useMutation("editUser", editOne, {
-    onSuccess: () =>
+    onSuccess: (res) =>
       Promise.all([
         reset(),
         handleCloseModal(),
@@ -47,6 +48,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
         setIsEditing(false),
         setIsChangingPassword(false),
         setIsHidden(true),
+        toast.success(res),
       ]),
   });
 
@@ -75,6 +77,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
         setIsEditing(false);
         setIsChangingPassword(false);
         setIsHidden(true);
+        reset();
       }}
     >
       <DeleteUserModal
@@ -242,6 +245,7 @@ const UserDetail = ({ isOpen, handleCloseModal, user }: Props) => {
                       setIsEditing((prev) => !prev);
                       setIsChangingPassword(false);
                       setIsHidden(true);
+                      reset();
                     }}
                     className="w-full bg-red-700 p-2 rounded font-semibold tracking-wider text-white hover:bg-red-600 ease-linear duration-100"
                   >

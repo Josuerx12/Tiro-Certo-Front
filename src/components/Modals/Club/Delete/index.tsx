@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { IClub } from "../../../../interfaces/IClub";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useClub } from "../../../../hooks/useClub";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -17,8 +18,15 @@ const DeleteClubModal = ({ isOpen, handleClose, club }: Props) => {
   const query = useQueryClient();
 
   const { isLoading, mutateAsync } = useMutation("deleteClub", deleteOne, {
-    onSuccess: () =>
-      Promise.all([handleClose(), query.invalidateQueries("clubs")]),
+    onSuccess: (res) =>
+      Promise.all([
+        handleClose(),
+        query.invalidateQueries("clubs"),
+        toast.success(res),
+      ]),
+    onError: () => {
+      toast.error("Erro ao deletar clube!");
+    },
   });
 
   return (

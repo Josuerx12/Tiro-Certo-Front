@@ -4,6 +4,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useMutation, useQueryClient } from "react-query";
 import { useUsers } from "../../../../hooks/useUsers";
 import { Modal } from "../../Modal";
+import toast from "react-hot-toast";
 
 type Props = {
   isOpen: boolean;
@@ -15,8 +16,12 @@ const DeleteUserModal = ({ isOpen, handleClose, user }: Props) => {
   const { deleteOne } = useUsers();
   const query = useQueryClient();
   const { isLoading, mutateAsync } = useMutation("deleteUser", deleteOne, {
-    onSuccess: () =>
-      Promise.all([handleClose(), query.invalidateQueries("users")]),
+    onSuccess: (res) =>
+      Promise.all([
+        handleClose(),
+        query.invalidateQueries("users"),
+        toast.success(res),
+      ]),
   });
   return (
     <Modal show={isOpen} hidden={handleClose} title={`Deletar Usuário:`}>

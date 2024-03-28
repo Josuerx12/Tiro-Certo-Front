@@ -25,7 +25,7 @@ function useClub() {
     }
   }
 
-  async function create(credentials: FormData) {
+  async function create(credentials: FormData): Promise<string> {
     try {
       const payload = (await api(token).post("/clubs", credentials)).data
         .payload;
@@ -42,7 +42,7 @@ function useClub() {
   }: {
     id: string;
     credentials: FormData;
-  }) {
+  }): Promise<string> {
     try {
       const payload = (await api(token).put("/clubs/" + id, credentials)).data
         .payload;
@@ -53,7 +53,7 @@ function useClub() {
     }
   }
 
-  async function deleteOne(id: string) {
+  async function deleteOne(id: string): Promise<string> {
     try {
       const payload = (await api(token).delete("/clubs/" + id)).data.payload;
 
