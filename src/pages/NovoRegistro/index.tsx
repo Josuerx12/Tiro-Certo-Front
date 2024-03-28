@@ -253,6 +253,7 @@ const NovoRegistro = () => {
             </select>
             <div className="flex gap-2">
               <button
+                type="button"
                 onClick={handlePrevStep}
                 className="w-full justify-center bg-neutral-600 transition group ease-linear duration-300 hover:bg-neutral-500 text-white flex items-center gap-2 p-2 rounded"
               >
@@ -383,6 +384,7 @@ const NovoRegistro = () => {
 
             <div className="flex gap-2">
               <button
+                type="button"
                 onClick={handlePrevStep}
                 className="w-full justify-center bg-neutral-600 transition group ease-linear duration-300 hover:bg-neutral-500 text-white flex items-center gap-2 p-2 rounded"
               >
