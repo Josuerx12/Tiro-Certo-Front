@@ -23,6 +23,7 @@ const App = () => {
     <main className="min-h-screen flex flex-col justify-between">
       <Navbar />
       <Routes>
+        <Route path="/" element={<Navigate to="/novoRegistro" />} />
         <Route
           path="/auth"
           element={user ? <Navigate to="/registros" /> : <Auth />}
